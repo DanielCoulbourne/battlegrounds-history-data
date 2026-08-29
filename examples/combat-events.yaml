@@ -1,0 +1,490 @@
+# combat-events.yaml — the same data as combat-events.json, in YAML.
+# Both files validate against schema/bg-history-1.0.schema.json.
+format: battlegrounds-history
+version: '1.0'
+cardIdScheme: hearthstone
+recording:
+  id: example-combat-events
+  recordedAt: '2026-01-14T19:03:44Z'
+  recorder:
+    name: Example Simulator
+    version: 0.1.0
+    kind: simulator
+  observer:
+    scope: lobby
+  detail:
+    combat: events
+    states: none
+    entities: true
+  truncated: true
+  truncationReason: This file holds one fight, not a whole game. Only the two seats in the fight are listed.
+  note: >-
+    Invented for illustration. The card ids are real so a tool can look them up; the boards and the
+    fight are made up.
+game:
+  id: example-game-3
+  mode: solo
+  patch: 34.2.0
+  seatCount: 8
+  minionTypes:
+    - beast
+    - elemental
+    - mech
+    - murloc
+    - quilboar
+  rng:
+    seed: 4c1f9a2b
+    engine: example-simulator/xoshiro256
+players:
+  - id: p1
+    seat: 0
+    kind: bot
+    agent:
+      name: ExampleBot
+      version: 0.1.0
+    hero:
+      cardId: TB_BaconShop_HERO_30
+      name: Nefarian
+      type: hero
+    heroPower:
+      cardId: TB_BaconShop_HP_043
+      name: Nefarious Fire
+      type: heroPower
+      text: 'Start of Combat: deal 1 damage to all enemy minions.'
+  - id: p2
+    seat: 3
+    kind: bot
+    agent:
+      name: ExampleBot
+      version: 0.1.0
+history:
+  - seq: 1
+    kind: event
+    event: combat_start
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      firstAttacker: p1
+      sides:
+        - player: p1
+          tier: 3
+          healthBefore: 27
+          heroPower:
+            cardId: TB_BaconShop_HP_043
+            name: Nefarious Fire
+            type: heroPower
+          board:
+            - entity: a1
+              cardId: BG31_803
+              name: Buzzing Vermin
+              type: minion
+              attack: 4
+              health: 4
+              tier: 1
+              minionTypes:
+                - beast
+              keywords:
+                - taunt
+                - reborn
+              enchantments:
+                - name: Dark Gift
+                  text: Reborn
+                  keywords:
+                    - reborn
+            - entity: a2
+              cardId: BG26_152
+              name: Utility Drone
+              type: minion
+              attack: 6
+              health: 9
+              tier: 3
+              minionTypes:
+                - mech
+              keywords:
+                - taunt
+                - divineShield
+              attached:
+                - entity: a2p
+                  cardId: BG_BOT_911
+                  name: Annoy-o-Module
+            - entity: a3
+              cardId: BG32_330
+              name: Flighty Scout
+              type: minion
+              attack: 6
+              health: 6
+              tier: 1
+              golden: true
+              minionTypes:
+                - murloc
+        - player: p2
+          tier: 3
+          healthBefore: 22
+          board:
+            - entity: b1
+              cardId: BG33_886
+              name: Tusked Camper
+              type: minion
+              attack: 5
+              health: 6
+              tier: 1
+              minionTypes:
+                - quilboar
+              keywords:
+                - taunt
+            - entity: b2
+              cardId: BG31_803
+              name: Buzzing Vermin
+              type: minion
+              attack: 3
+              health: 3
+              tier: 1
+              minionTypes:
+                - beast
+              keywords:
+                - venomous
+              enchantments:
+                - name: Dark Gift
+                  text: Venomous
+                  keywords:
+                    - venomous
+    note: p1 swings first because it brought more minions.
+  - seq: 2
+    kind: event
+    event: trigger
+    turn: 8
+    phase: combat
+    actor: p1
+    data:
+      combat: c8
+      source:
+        player: p1
+        zone: heroPower
+        cardId: TB_BaconShop_HP_043
+      reason: heroPower
+      times: 1
+    note: 'start of combat: 1 damage to every enemy minion'
+  - seq: 3
+    kind: event
+    event: damage
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      source:
+        player: p1
+        zone: heroPower
+        cardId: TB_BaconShop_HP_043
+      target:
+        player: p2
+        zone: board
+        entity: b1
+      amount: 1
+  - seq: 4
+    kind: event
+    event: damage
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      source:
+        player: p1
+        zone: heroPower
+        cardId: TB_BaconShop_HP_043
+      target:
+        player: p2
+        zone: board
+        entity: b2
+      amount: 1
+  - seq: 5
+    kind: event
+    event: attack
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      attacker:
+        player: p1
+        zone: board
+        entity: a1
+      defender:
+        player: p2
+        zone: board
+        entity: b1
+      swing: 1
+    note: Tusked Camper has Taunt, so it must be attacked before anything else on that board.
+  - seq: 6
+    kind: event
+    event: damage
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      source:
+        player: p1
+        zone: board
+        entity: a1
+      target:
+        player: p2
+        zone: board
+        entity: b1
+      amount: 4
+  - seq: 7
+    kind: event
+    event: damage
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      source:
+        player: p2
+        zone: board
+        entity: b1
+      target:
+        player: p1
+        zone: board
+        entity: a1
+      amount: 5
+      lethal: true
+    note: Both minions strike at the same instant, so a dying defender still hits back.
+  - seq: 8
+    kind: event
+    event: death
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      target:
+        player: p1
+        zone: board
+        entity: a1
+      killer:
+        player: p2
+        zone: board
+        entity: b1
+  - seq: 9
+    kind: event
+    event: reborn
+    turn: 8
+    phase: combat
+    actor: p1
+    data:
+      combat: c8
+      source:
+        player: p1
+        entity: a1
+      card:
+        entity: a1r
+        cardId: BG31_803
+        name: Buzzing Vermin
+        type: minion
+        attack: 1
+        health: 1
+        tier: 1
+        minionTypes:
+          - beast
+        keywords:
+          - taunt
+      position: 0
+    note: Reborn brings the printed card back once, at 1 health and with none of the buffs it had.
+  - seq: 10
+    kind: event
+    event: attack
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      attacker:
+        player: p2
+        zone: board
+        entity: b1
+      defender:
+        player: p1
+        zone: board
+        entity: a1r
+      swing: 1
+  - seq: 11
+    kind: event
+    event: damage
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      source:
+        player: p2
+        zone: board
+        entity: b1
+      target:
+        player: p1
+        zone: board
+        entity: a1r
+      amount: 5
+      lethal: true
+  - seq: 12
+    kind: event
+    event: damage
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      source:
+        player: p1
+        zone: board
+        entity: a1r
+      target:
+        player: p2
+        zone: board
+        entity: b1
+      amount: 1
+      lethal: true
+  - seq: 13
+    kind: event
+    event: death
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      target:
+        player: p1
+        zone: board
+        entity: a1r
+      killer:
+        player: p2
+        zone: board
+        entity: b1
+  - seq: 14
+    kind: event
+    event: death
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      target:
+        player: p2
+        zone: board
+        entity: b1
+      killer:
+        player: p1
+        zone: board
+        entity: a1r
+    note: >-
+      Two minions died at the same instant. The order of these entries is the order the engine
+      settled them, which is a fact about the engine and is recorded rather than inferred.
+  - seq: 15
+    kind: event
+    event: attack
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      attacker:
+        player: p1
+        zone: board
+        entity: a2
+      defender:
+        player: p2
+        zone: board
+        entity: b2
+      swing: 1
+  - seq: 16
+    kind: event
+    event: damage
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      source:
+        player: p1
+        zone: board
+        entity: a2
+      target:
+        player: p2
+        zone: board
+        entity: b2
+      amount: 6
+      lethal: true
+  - seq: 17
+    kind: event
+    event: damage
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      source:
+        player: p2
+        zone: board
+        entity: b2
+      target:
+        player: p1
+        zone: board
+        entity: a2
+      amount: 3
+      poisonous: true
+      absorbed: true
+      lethal: false
+    note: >-
+      A Divine Shield swallows the whole hit, and the poison rides on the hit, so the shield saves
+      the minion from it as well.
+  - seq: 18
+    kind: event
+    event: divine_shield_lost
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      target:
+        player: p1
+        zone: board
+        entity: a2
+      source:
+        player: p2
+        zone: board
+        entity: b2
+  - seq: 19
+    kind: event
+    event: death
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      target:
+        player: p2
+        zone: board
+        entity: b2
+      killer:
+        player: p1
+        zone: board
+        entity: a2
+  - seq: 20
+    kind: event
+    event: hero_damage
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      player: p2
+      amount: 7
+    note: The winner's tavern tier, 3, plus the tiers of the two minions still standing, 3 and 1.
+  - seq: 21
+    kind: event
+    event: combat_end
+    turn: 8
+    phase: combat
+    data:
+      combat: c8
+      winner: p1
+      sides:
+        - player: p1
+          healthBefore: 27
+          healthAfter: 27
+          damageTaken: 0
+          survivors:
+            - entity: a2
+            - entity: a3
+        - player: p2
+          healthBefore: 22
+          healthAfter: 15
+          damageTaken: 7
+          survivors: []
+          eliminated: false

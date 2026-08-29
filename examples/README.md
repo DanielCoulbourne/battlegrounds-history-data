@@ -1,0 +1,39 @@
+# Examples
+
+Every file here is a complete, valid Battlegrounds History Data document. Each
+`.json` file has a `.yaml` twin holding exactly the same data; the YAML is
+generated from the JSON, so the two cannot drift apart.
+
+| File | Observer | Combat detail | What it shows |
+|---|---|---|---|
+| `full-game.json` | lobby | `outcome` | A whole game, start to finish. Hero picks, four turns, a fight against a copy of a knocked-out player's board, three knockouts, final placements. |
+| `single-turn.json` | seat | `boards` | One recruit phase from one player's point of view: a purchase, a Mech fusion, three copies merging into a golden one and the card that discovers, a roll, a freeze, then the fight. |
+| `combat-events.json` | lobby | `events` | One fight, blow by blow: a start-of-combat hero power, a trade, Reborn bringing a minion back, and a Divine Shield swallowing a poisoned hit. |
+
+Together they cover all three combat detail levels and both observer scopes.
+
+## These are made up
+
+The situations, boards, shops, stats and decisions in these files are invented.
+They are not dumps of any real game or any real program's output.
+
+The **card ids are real** — `BG31_803`, `TB_BaconShop_HP_043` and so on — so that
+a tool reading an example can look them up in a card database and render
+something. Where an example shows a card's attack and health, those are the
+numbers that card had *in the invented situation*, after whatever buffs the
+example gave it. Do not read them as the card's printed stats.
+
+`full-game.json` uses a four-seat lobby with 10 starting health, so a whole game
+fits on one page. A real game has eight seats, 30 or more starting health, and
+runs for far longer.
+
+## Validating them
+
+```bash
+npm install
+npm run validate
+```
+
+That runs `tools/validate.mjs` over every file in this directory, in both
+formats. It checks the JSON Schema and the
+[rules a schema cannot express](../SPECIFICATION.md#14-rules-a-schema-cannot-check).

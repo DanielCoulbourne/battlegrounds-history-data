@@ -1,0 +1,910 @@
+# full-game.yaml — the same data as full-game.json, in YAML.
+# Both files validate against schema/bg-history-1.0.schema.json.
+format: battlegrounds-history
+version: '1.0'
+cardIdScheme: hearthstone
+recording:
+  id: example-full-game
+  recordedAt: '2026-01-14T20:11:00Z'
+  recorder:
+    name: Example Simulator
+    version: 0.1.0
+    kind: simulator
+    url: https://github.com/DanielCoulbourne/battlegrounds-history-data
+  observer:
+    scope: lobby
+  detail:
+    combat: outcome
+    states: irregular
+    entities: true
+  note: >-
+    A made-up four-seat lobby with low starting health, so a whole game fits on one page. A real
+    game has eight seats and runs far longer. The recorder could see every seat, but it wrote down
+    only one seat's shopping and every seat's fights; detail.states says so.
+game:
+  id: example-game-1
+  mode: solo
+  startedAt: '2026-01-14T20:05:00Z'
+  patch: 34.2.0
+  seatCount: 4
+  minionTypes:
+    - beast
+    - mech
+    - murloc
+    - quilboar
+  rng:
+    seed: 20260114
+    engine: example-simulator/xoshiro256
+players:
+  - id: p1
+    seat: 0
+    kind: bot
+    agent:
+      name: ExampleBot
+      version: 0.1.0
+    hero:
+      cardId: TB_BaconShop_HERO_30
+      name: Nefarian
+      type: hero
+    heroPower:
+      cardId: TB_BaconShop_HP_043
+      name: Nefarious Fire
+      type: heroPower
+    startingHealth: 10
+    result:
+      placement: 1
+      health: 10
+      tier: 2
+      combatsPlayed: 4
+      combatsWon: 4
+      heroPowerUses: 0
+  - id: p2
+    seat: 1
+    kind: bot
+    agent:
+      name: ExampleBot
+      version: 0.1.0
+    hero:
+      cardId: TB_BaconShop_HERO_08
+      name: Illidan Stormrage
+      type: hero
+    heroPower:
+      cardId: TB_BaconShop_HP_069
+      name: Wingmen
+      type: heroPower
+    startingHealth: 10
+    result:
+      placement: 4
+      health: 0
+      tier: 1
+      combatsPlayed: 2
+      combatsWon: 0
+      eliminatedOnTurn: 2
+  - id: p3
+    seat: 2
+    kind: bot
+    agent:
+      name: ExampleBot
+      version: 0.1.0
+    hero:
+      cardId: BG22_HERO_002
+      name: Drek'Thar
+      type: hero
+    heroPower:
+      cardId: BG22_HERO_002p
+      name: Rally the Frostwolves
+      type: heroPower
+    startingHealth: 10
+    result:
+      placement: 3
+      health: 0
+      tier: 1
+      combatsPlayed: 3
+      combatsWon: 1
+      eliminatedOnTurn: 3
+  - id: p4
+    seat: 3
+    kind: bot
+    agent:
+      name: ExampleBot
+      version: 0.1.0
+    hero:
+      cardId: BG22_HERO_003
+      name: Vanndar Stormpike
+      type: hero
+    heroPower:
+      cardId: BG22_HERO_003p
+      name: Rally the Stormpikes
+      type: heroPower
+    startingHealth: 10
+    result:
+      placement: 2
+      health: 0
+      tier: 1
+      combatsPlayed: 4
+      combatsWon: 2
+      eliminatedOnTurn: 4
+history:
+  - seq: 1
+    kind: event
+    event: game_start
+    phase: setup
+    turn: 0
+    data:
+      turn: 0
+  - seq: 2
+    kind: event
+    event: offer
+    actor: p1
+    phase: setup
+    turn: 0
+    data:
+      id: hero-p1
+      offerType: hero
+      mandatory: true
+      options:
+        - cards:
+            - cardId: TB_BaconShop_HERO_30
+              name: Nefarian
+              type: hero
+        - cards:
+            - cardId: TB_BaconShop_HERO_27
+              name: Sindragosa
+              type: hero
+  - seq: 3
+    kind: action
+    actor: p1
+    action: choose_hero
+    phase: setup
+    turn: 0
+    data:
+      offer: hero-p1
+      option: 0
+  - seq: 4
+    kind: event
+    event: offer
+    actor: p2
+    phase: setup
+    turn: 0
+    data:
+      id: hero-p2
+      offerType: hero
+      mandatory: true
+      options:
+        - cards:
+            - cardId: TB_BaconShop_HERO_08
+              name: Illidan Stormrage
+              type: hero
+        - cards:
+            - cardId: BG22_HERO_003
+              name: Vanndar Stormpike
+              type: hero
+  - seq: 5
+    kind: action
+    actor: p2
+    action: choose_hero
+    phase: setup
+    turn: 0
+    data:
+      offer: hero-p2
+      option: 0
+  - seq: 6
+    kind: event
+    event: offer
+    actor: p3
+    phase: setup
+    turn: 0
+    data:
+      id: hero-p3
+      offerType: hero
+      mandatory: true
+      options:
+        - cards:
+            - cardId: BG22_HERO_002
+              name: Drek'Thar
+              type: hero
+        - cards:
+            - cardId: TB_BaconShop_HERO_27
+              name: Sindragosa
+              type: hero
+  - seq: 7
+    kind: action
+    actor: p3
+    action: choose_hero
+    phase: setup
+    turn: 0
+    data:
+      offer: hero-p3
+      option: 0
+  - seq: 8
+    kind: event
+    event: offer
+    actor: p4
+    phase: setup
+    turn: 0
+    data:
+      id: hero-p4
+      offerType: hero
+      mandatory: true
+      options:
+        - cards:
+            - cardId: BG22_HERO_003
+              name: Vanndar Stormpike
+              type: hero
+        - cards:
+            - cardId: TB_BaconShop_HERO_27
+              name: Sindragosa
+              type: hero
+  - seq: 9
+    kind: action
+    actor: p4
+    action: choose_hero
+    phase: setup
+    turn: 0
+    data:
+      offer: hero-p4
+      option: 0
+  - seq: 10
+    kind: event
+    event: turn_start
+    turn: 1
+    phase: recruit
+    data:
+      turn: 1
+    note: No actor, so this is the whole lobby starting turn 1.
+  - seq: 11
+    kind: event
+    event: shop_dealt
+    actor: p1
+    turn: 1
+    phase: recruit
+    data:
+      reason: turnStart
+      cards:
+        - entity: s1
+          cardId: BG32_330
+          name: Flighty Scout
+          type: minion
+          attack: 3
+          health: 3
+          tier: 1
+          minionTypes:
+            - murloc
+          cost: 3
+        - entity: s2
+          cardId: BG31_803
+          name: Buzzing Vermin
+          type: minion
+          attack: 1
+          health: 1
+          tier: 1
+          minionTypes:
+            - beast
+          keywords:
+            - taunt
+          cost: 3
+        - entity: s3
+          cardId: BG26_146
+          name: Lullabot
+          type: minion
+          attack: 2
+          health: 2
+          tier: 1
+          minionTypes:
+            - mech
+          keywords:
+            - magnetic
+          cost: 3
+  - seq: 12
+    kind: state
+    actor: p1
+    turn: 1
+    phase: recruit
+    reason: turnStart
+    player:
+      health: 10
+      tier: 1
+      gold: 3
+      goldCap: 10
+      upgradeCost: 5
+      rollCost: 1
+      alive: true
+    zones:
+      board:
+        cards: []
+        capacity: 7
+      hand:
+        cards: []
+        capacity: 10
+    standings:
+      - player: p1
+        health: 10
+        tier: 1
+        alive: true
+      - player: p2
+        health: 10
+        tier: 1
+        alive: true
+      - player: p3
+        health: 10
+        tier: 1
+        alive: true
+      - player: p4
+        health: 10
+        tier: 1
+        alive: true
+  - seq: 13
+    kind: action
+    actor: p1
+    action: buy
+    turn: 1
+    phase: recruit
+    data:
+      from:
+        zone: shop
+        index: 0
+        entity: s1
+      to:
+        zone: hand
+        index: 0
+      cost: 3
+      gold: 0
+  - seq: 14
+    kind: action
+    actor: p1
+    action: play
+    turn: 1
+    phase: recruit
+    data:
+      from:
+        zone: hand
+        index: 0
+        entity: s1
+      to:
+        zone: board
+        index: 0
+  - seq: 15
+    kind: event
+    event: pairing_announced
+    actor: p1
+    turn: 1
+    phase: recruit
+    data:
+      opponent: p2
+  - seq: 16
+    kind: event
+    event: pairing_announced
+    actor: p3
+    turn: 1
+    phase: recruit
+    data:
+      opponent: p4
+  - seq: 17
+    kind: action
+    actor: p1
+    action: end_turn
+    turn: 1
+    phase: recruit
+    data:
+      gold: 0
+  - seq: 18
+    kind: event
+    event: combat_end
+    turn: 1
+    phase: combat
+    data:
+      combat: c1
+      winner: p1
+      sides:
+        - player: p1
+          healthBefore: 10
+          healthAfter: 10
+          damageTaken: 0
+        - player: p2
+          healthBefore: 10
+          healthAfter: 6
+          damageTaken: 4
+  - seq: 19
+    kind: event
+    event: combat_end
+    turn: 1
+    phase: combat
+    data:
+      combat: c2
+      winner: p3
+      sides:
+        - player: p3
+          healthBefore: 10
+          healthAfter: 10
+          damageTaken: 0
+        - player: p4
+          healthBefore: 10
+          healthAfter: 5
+          damageTaken: 5
+  - seq: 20
+    kind: event
+    event: turn_start
+    turn: 2
+    phase: recruit
+    data:
+      turn: 2
+  - seq: 21
+    kind: event
+    event: shop_dealt
+    actor: p1
+    turn: 2
+    phase: recruit
+    data:
+      reason: turnStart
+      cards:
+        - entity: s4
+          cardId: BG31_803
+          name: Buzzing Vermin
+          type: minion
+          attack: 1
+          health: 1
+          tier: 1
+          minionTypes:
+            - beast
+          keywords:
+            - taunt
+          cost: 3
+        - entity: s5
+          cardId: BG33_886
+          name: Tusked Camper
+          type: minion
+          attack: 2
+          health: 3
+          tier: 1
+          minionTypes:
+            - quilboar
+          cost: 3
+        - entity: s6
+          cardId: BG26_146
+          name: Lullabot
+          type: minion
+          attack: 2
+          health: 2
+          tier: 1
+          minionTypes:
+            - mech
+          keywords:
+            - magnetic
+          cost: 3
+  - seq: 22
+    kind: action
+    actor: p1
+    action: buy
+    turn: 2
+    phase: recruit
+    data:
+      from:
+        zone: shop
+        index: 0
+        entity: s4
+      to:
+        zone: hand
+        index: 0
+      cost: 3
+      gold: 1
+  - seq: 23
+    kind: action
+    actor: p1
+    action: play
+    turn: 2
+    phase: recruit
+    data:
+      from:
+        zone: hand
+        index: 0
+        entity: s4
+      to:
+        zone: board
+        index: 0
+    note: played in front of the Flighty Scout, because Taunt should be attacked first
+  - seq: 24
+    kind: event
+    event: pairing_announced
+    actor: p1
+    turn: 2
+    phase: recruit
+    data:
+      opponent: p3
+  - seq: 25
+    kind: event
+    event: pairing_announced
+    actor: p2
+    turn: 2
+    phase: recruit
+    data:
+      opponent: p4
+  - seq: 26
+    kind: action
+    actor: p1
+    action: end_turn
+    turn: 2
+    phase: recruit
+    data:
+      gold: 1
+  - seq: 27
+    kind: event
+    event: combat_end
+    turn: 2
+    phase: combat
+    data:
+      combat: c3
+      winner: p1
+      sides:
+        - player: p1
+          healthBefore: 10
+          healthAfter: 10
+          damageTaken: 0
+        - player: p3
+          healthBefore: 10
+          healthAfter: 7
+          damageTaken: 3
+  - seq: 28
+    kind: event
+    event: combat_end
+    turn: 2
+    phase: combat
+    data:
+      combat: c4
+      winner: p4
+      sides:
+        - player: p4
+          healthBefore: 5
+          healthAfter: 5
+          damageTaken: 0
+        - player: p2
+          healthBefore: 6
+          healthAfter: 0
+          damageTaken: 6
+          eliminated: true
+  - seq: 29
+    kind: event
+    event: player_eliminated
+    turn: 2
+    phase: combat
+    data:
+      player: p2
+      placement: 4
+  - seq: 30
+    kind: event
+    event: turn_start
+    turn: 3
+    phase: recruit
+    data:
+      turn: 3
+  - seq: 31
+    kind: event
+    event: shop_dealt
+    actor: p1
+    turn: 3
+    phase: recruit
+    data:
+      reason: turnStart
+      cards:
+        - entity: s7
+          cardId: BG26_146
+          name: Lullabot
+          type: minion
+          attack: 2
+          health: 2
+          tier: 1
+          minionTypes:
+            - mech
+          keywords:
+            - magnetic
+          cost: 3
+        - entity: s8
+          cardId: BG26_146
+          name: Lullabot
+          type: minion
+          attack: 2
+          health: 2
+          tier: 1
+          minionTypes:
+            - mech
+          keywords:
+            - magnetic
+          cost: 3
+        - entity: s9
+          cardId: BG32_330
+          name: Flighty Scout
+          type: minion
+          attack: 3
+          health: 3
+          tier: 1
+          minionTypes:
+            - murloc
+          cost: 3
+  - seq: 32
+    kind: action
+    actor: p1
+    action: buy
+    turn: 3
+    phase: recruit
+    data:
+      from:
+        zone: shop
+        index: 2
+        entity: s9
+      to:
+        zone: hand
+        index: 0
+      cost: 3
+      gold: 2
+  - seq: 33
+    kind: action
+    actor: p1
+    action: play
+    turn: 3
+    phase: recruit
+    data:
+      from:
+        zone: hand
+        index: 0
+        entity: s9
+      to:
+        zone: board
+        index: 2
+  - seq: 34
+    kind: action
+    actor: p1
+    action: roll
+    turn: 3
+    phase: recruit
+    data:
+      cost: 1
+      gold: 1
+  - seq: 35
+    kind: event
+    event: shop_dealt
+    actor: p1
+    turn: 3
+    phase: recruit
+    data:
+      reason: roll
+      cards:
+        - entity: s10
+          cardId: BG33_886
+          name: Tusked Camper
+          type: minion
+          attack: 2
+          health: 3
+          tier: 1
+          minionTypes:
+            - quilboar
+          cost: 3
+        - entity: s11
+          cardId: BG31_803
+          name: Buzzing Vermin
+          type: minion
+          attack: 1
+          health: 1
+          tier: 1
+          minionTypes:
+            - beast
+          keywords:
+            - taunt
+          cost: 3
+        - entity: s12
+          cardId: BG32_330
+          name: Flighty Scout
+          type: minion
+          attack: 3
+          health: 3
+          tier: 1
+          minionTypes:
+            - murloc
+          cost: 3
+  - seq: 36
+    kind: action
+    actor: p1
+    action: freeze
+    turn: 3
+    phase: recruit
+    note: held the shop, because next turn's gold buys the Flighty Scout that is already there
+  - seq: 37
+    kind: event
+    event: pairing_announced
+    actor: p1
+    turn: 3
+    phase: recruit
+    data:
+      opponent: p3
+  - seq: 38
+    kind: event
+    event: pairing_announced
+    actor: p4
+    turn: 3
+    phase: recruit
+    data:
+      opponent: p2
+      ghostOf: p2
+    note: >-
+      Only three players are left, so one of them fights a copy of a knocked-out player's board.
+      Nothing that happens to the copy touches p2, who is already out.
+  - seq: 39
+    kind: action
+    actor: p1
+    action: end_turn
+    turn: 3
+    phase: recruit
+    data:
+      gold: 1
+  - seq: 40
+    kind: event
+    event: combat_end
+    turn: 3
+    phase: combat
+    data:
+      combat: c5
+      winner: p1
+      sides:
+        - player: p1
+          healthBefore: 10
+          healthAfter: 10
+          damageTaken: 0
+        - player: p3
+          healthBefore: 7
+          healthAfter: 0
+          damageTaken: 7
+          eliminated: true
+  - seq: 41
+    kind: event
+    event: combat_end
+    turn: 3
+    phase: combat
+    data:
+      combat: c6
+      winner: p4
+      sides:
+        - player: p4
+          healthBefore: 5
+          healthAfter: 5
+          damageTaken: 0
+        - ghostOf: p2
+          healthBefore: null
+          healthAfter: null
+          damageTaken: null
+    note: The losing side is a copy, so it has no health to lose and the numbers are null rather than 0.
+  - seq: 42
+    kind: event
+    event: player_eliminated
+    turn: 3
+    phase: combat
+    data:
+      player: p3
+      placement: 3
+  - seq: 43
+    kind: event
+    event: turn_start
+    turn: 4
+    phase: recruit
+    data:
+      turn: 4
+  - seq: 44
+    kind: action
+    actor: p1
+    action: buy
+    turn: 4
+    phase: recruit
+    data:
+      from:
+        zone: shop
+        index: 2
+        entity: s12
+      to:
+        zone: hand
+        index: 0
+      cost: 3
+      gold: 3
+    note: the frozen shop was still there
+  - seq: 45
+    kind: action
+    actor: p1
+    action: play
+    turn: 4
+    phase: recruit
+    data:
+      from:
+        zone: hand
+        index: 0
+        entity: s12
+      to:
+        zone: board
+        index: 3
+  - seq: 46
+    kind: action
+    actor: p1
+    action: upgrade
+    turn: 4
+    phase: recruit
+    data:
+      cost: 3
+      gold: 0
+      tier: 2
+    note: the price of the next tier falls by 1 for every turn it is not bought
+  - seq: 47
+    kind: event
+    event: pairing_announced
+    actor: p1
+    turn: 4
+    phase: recruit
+    data:
+      opponent: p4
+  - seq: 48
+    kind: action
+    actor: p1
+    action: end_turn
+    turn: 4
+    phase: recruit
+    data:
+      gold: 0
+  - seq: 49
+    kind: event
+    event: combat_end
+    turn: 4
+    phase: combat
+    data:
+      combat: c7
+      winner: p1
+      sides:
+        - player: p1
+          healthBefore: 10
+          healthAfter: 10
+          damageTaken: 0
+        - player: p4
+          healthBefore: 5
+          healthAfter: 0
+          damageTaken: 8
+          eliminated: true
+    note: >-
+      A hit larger than the health left still reports what it dealt; healthAfter never falls below
+      0.
+  - seq: 50
+    kind: event
+    event: player_eliminated
+    turn: 4
+    phase: combat
+    data:
+      player: p4
+      placement: 2
+  - seq: 51
+    kind: event
+    event: game_end
+    turn: 4
+    phase: end
+    data:
+      placements:
+        - player: p1
+          placement: 1
+        - player: p4
+          placement: 2
+        - player: p3
+          placement: 3
+        - player: p2
+          placement: 4
+      standings:
+        - player: p1
+          health: 10
+          tier: 2
+          alive: true
+          placement: 1
+        - player: p4
+          health: 0
+          tier: 1
+          alive: false
+          placement: 2
+        - player: p3
+          health: 0
+          tier: 1
+          alive: false
+          placement: 3
+        - player: p2
+          health: 0
+          tier: 1
+          alive: false
+          placement: 4

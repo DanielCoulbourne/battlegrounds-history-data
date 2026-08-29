@@ -1,0 +1,808 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/DanielCoulbourne/battlegrounds-history-data/main/schema/bg-history-1.0.schema.json",
+  "title": "Battlegrounds History Data 1.0",
+  "description": "An engine-neutral record of one Hearthstone Battlegrounds game: the states the game passed through and the actions that moved between them. SPECIFICATION.md holds the prose. Unknown members are allowed everywhere; a reader must ignore what it does not understand.",
+  "type": "object",
+  "required": ["format", "version", "recording", "game", "players", "history"],
+  "properties": {
+    "format": {
+      "const": "battlegrounds-history",
+      "description": "Fixed marker, so a reader can identify the file without guessing from its name."
+    },
+    "version": {
+      "$ref": "#/$defs/specVersion",
+      "description": "The version of this specification the file claims to follow."
+    },
+    "cardIdScheme": {
+      "type": "string",
+      "default": "hearthstone",
+      "description": "The naming system every cardId in this file comes from. 'hearthstone' means Blizzard's own text card ids, such as BG31_803."
+    },
+    "recording": { "$ref": "#/$defs/recording" },
+    "game": { "$ref": "#/$defs/game" },
+    "players": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/player" },
+      "description": "Every seat the recorder knows about, in any order."
+    },
+    "history": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" },
+      "description": "The game as an ordered list of entries. The order of the list is the order things happened."
+    },
+    "ext": { "$ref": "#/$defs/ext" }
+  },
+
+  "$defs": {
+
+    "specVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$",
+      "description": "MAJOR.MINOR. A rise in MINOR only adds things. A rise in MAJOR may remove or redefine them."
+    },
+
+    "ext": {
+      "type": "object",
+      "description": "Anything a producer wants to keep that this format does not define. Key it by your own name, such as {\"acme\": {}}, so two producers cannot collide. No reader may depend on it.",
+      "additionalProperties": true
+    },
+
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "description": "A short name, unique inside this file."
+    },
+
+    "openName": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^x-[a-zA-Z0-9_.-]+$",
+      "description": "A vocabulary word this specification does not list. It must start with 'x-', so a reader can always tell a private word from a standard one."
+    },
+
+    "cardId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The stable id of a card, in the file's cardIdScheme. This is the only field a reader may use to decide which card something is."
+    },
+
+    "minionType": {
+      "description": "A minion type, which players also call a tribe. 'all' means the card counts as every type at once.",
+      "anyOf": [
+        { "enum": ["beast", "demon", "dragon", "elemental", "mech", "murloc", "naga", "pirate", "quilboar", "undead", "all"] },
+        { "$ref": "#/$defs/openName" }
+      ]
+    },
+
+    "keyword": {
+      "description": "A printed ability that changes how a card fights or is bought.",
+      "anyOf": [
+        {
+          "enum": [
+            "taunt", "divineShield", "poisonous", "venomous", "windfury", "megaWindfury",
+            "reborn", "stealth", "immune", "cleave", "cantAttack",
+            "battlecry", "deathrattle", "startOfCombat", "endOfTurn", "startOfTurn",
+            "avenge", "rally", "magnetic", "spellcraft", "chooseOne", "discover",
+            "activate", "frenzy", "overkill"
+          ]
+        },
+        { "$ref": "#/$defs/openName" }
+      ]
+    },
+
+    "cardType": {
+      "description": "What sort of card this is.",
+      "anyOf": [
+        { "enum": ["minion", "spell", "trinket", "hero", "heroPower", "token", "quest", "reward", "anomaly", "buddy", "other"] },
+        { "$ref": "#/$defs/openName" }
+      ]
+    },
+
+    "zoneName": {
+      "description": "Where a card is standing.",
+      "anyOf": [
+        { "enum": ["board", "hand", "shop", "trinkets", "hero", "heroPower", "offer", "removed"] },
+        { "$ref": "#/$defs/openName" }
+      ]
+    },
+
+    "enchantment": {
+      "type": "object",
+      "description": "Something attached to a card that changes it: a buff from a spell, a Dark Gift, a lasting effect.",
+      "properties": {
+        "cardId": { "$ref": "#/$defs/cardId" },
+        "name": { "type": "string" },
+        "text": { "type": "string" },
+        "attack": { "type": "integer", "description": "Attack this attachment adds." },
+        "health": { "type": "integer", "description": "Health this attachment adds." },
+        "keywords": { "type": "array", "items": { "$ref": "#/$defs/keyword" } },
+        "ext": { "$ref": "#/$defs/ext" }
+      }
+    },
+
+    "card": {
+      "type": "object",
+      "description": "One card as it stood at a moment: which card it is, and the numbers it showed.",
+      "properties": {
+        "entity": {
+          "$ref": "#/$defs/identifier",
+          "description": "A name for this one physical copy, stable for as long as the copy exists. Two copies of the same card carry different entity names."
+        },
+        "cardId": { "$ref": "#/$defs/cardId" },
+        "name": { "type": "string", "description": "For display. Never match on it." },
+        "type": { "$ref": "#/$defs/cardType" },
+        "attack": { "type": "integer", "description": "Current attack, with every buff already added in." },
+        "health": { "type": "integer", "description": "Current health, with every buff already added in." },
+        "maxHealth": { "type": "integer", "description": "Health before damage, when the two differ." },
+        "tier": { "type": "integer", "minimum": 0, "description": "The tavern tier this card is sold at." },
+        "golden": { "type": "boolean", "description": "A golden copy, made by collecting three of the same card." },
+        "minionTypes": { "type": "array", "items": { "$ref": "#/$defs/minionType" } },
+        "keywords": { "type": "array", "items": { "$ref": "#/$defs/keyword" } },
+        "cost": { "type": "integer", "description": "What it costs to buy or play at this moment." },
+        "costsHealth": { "type": "boolean", "description": "The cost is paid in health rather than gold." },
+        "playable": { "type": "boolean", "description": "Whether the owner could legally buy or play it at this moment." },
+        "enchantments": { "type": "array", "items": { "$ref": "#/$defs/enchantment" } },
+        "attached": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/card" },
+          "description": "Cards fused into this one, such as Mech parts added by magnetizing."
+        },
+        "text": { "type": "string", "description": "Rules text, for display." },
+        "unknown": {
+          "type": "boolean",
+          "description": "True when the recorder knows a card is here but cannot see which card it is. cardId is then absent."
+        },
+        "ext": { "$ref": "#/$defs/ext" }
+      },
+      "anyOf": [
+        { "required": ["cardId"] },
+        { "properties": { "unknown": { "const": true } }, "required": ["unknown"] }
+      ]
+    },
+
+    "ref": {
+      "type": "object",
+      "description": "A pointer at one card in one place. Give an entity name, a position, or both. Positions count from 0, left to right.",
+      "properties": {
+        "player": { "$ref": "#/$defs/identifier", "description": "Whose zone. Defaults to the acting player." },
+        "zone": { "$ref": "#/$defs/zoneName" },
+        "index": { "type": "integer", "minimum": 0 },
+        "entity": { "$ref": "#/$defs/identifier" },
+        "cardId": { "$ref": "#/$defs/cardId", "description": "Repeats what the entity already says, but helps a file that carries no entity names." }
+      },
+      "anyOf": [
+        { "required": ["entity"] },
+        { "required": ["index"] },
+        { "required": ["zone"] }
+      ]
+    },
+
+    "zone": {
+      "type": "object",
+      "description": "The contents of one zone, and an honest count of what the recorder could not see.",
+      "properties": {
+        "cards": { "type": "array", "items": { "$ref": "#/$defs/card" } },
+        "unknownCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "How many further cards sit in this zone whose identity the recorder cannot see."
+        },
+        "frozen": { "type": "boolean", "description": "Shop only: the shop is held over to the next turn." },
+        "capacity": { "type": "integer", "minimum": 0, "description": "How many cards fit." },
+        "ext": { "$ref": "#/$defs/ext" }
+      }
+    },
+
+    "recording": {
+      "type": "object",
+      "required": ["id", "observer"],
+      "description": "Facts about the file itself rather than about the game.",
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier", "description": "A name for this recording, unique to whoever produced it." },
+        "recordedAt": { "type": "string", "format": "date-time" },
+        "recorder": {
+          "type": "object",
+          "description": "The program that produced the file.",
+          "properties": {
+            "name": { "type": "string" },
+            "version": { "type": "string" },
+            "kind": {
+              "description": "'tracker' watches a live client. 'simulator' plays the game itself. 'replayParser' reads a stored game. 'manual' means a person typed it in.",
+              "anyOf": [
+                { "enum": ["tracker", "simulator", "replayParser", "manual", "other"] },
+                { "$ref": "#/$defs/openName" }
+              ]
+            },
+            "url": { "type": "string", "format": "uri" },
+            "ext": { "$ref": "#/$defs/ext" }
+          }
+        },
+        "observer": { "$ref": "#/$defs/observer" },
+        "detail": { "$ref": "#/$defs/detail" },
+        "truncated": { "type": "boolean", "description": "The recording stops before the game did." },
+        "truncationReason": { "type": "string" },
+        "note": { "type": "string" },
+        "ext": { "$ref": "#/$defs/ext" }
+      }
+    },
+
+    "observer": {
+      "type": "object",
+      "required": ["scope"],
+      "description": "Who was watching, and therefore what the file can be trusted to contain.",
+      "properties": {
+        "scope": {
+          "enum": ["lobby", "seat"],
+          "description": "'lobby' means every seat was visible, which only a program that runs the whole game can claim. 'seat' means one player's point of view."
+        },
+        "seat": {
+          "$ref": "#/$defs/identifier",
+          "description": "The player whose point of view this is. Required when scope is 'seat'."
+        },
+        "ext": { "$ref": "#/$defs/ext" }
+      },
+      "if": { "properties": { "scope": { "const": "seat" } }, "required": ["scope"] },
+      "then": { "required": ["seat"] }
+    },
+
+    "detail": {
+      "type": "object",
+      "description": "How much the file contains, stated up front so a reader never has to read an absence as a fact.",
+      "properties": {
+        "combat": {
+          "enum": ["none", "outcome", "boards", "events"],
+          "default": "outcome",
+          "description": "'none': fights are not recorded at all. 'outcome': who won and what it cost. 'boards': also the two boards as they were sent in. 'events': also the blow by blow."
+        },
+        "states": {
+          "enum": ["none", "turnStart", "everyAction", "irregular"],
+          "default": "turnStart",
+          "description": "How often the file writes down a full picture of a seat."
+        },
+        "entities": {
+          "type": "boolean",
+          "default": false,
+          "description": "True when every card carries an entity name, so one copy can be followed through the whole game."
+        },
+        "ext": { "$ref": "#/$defs/ext" }
+      }
+    },
+
+    "game": {
+      "type": "object",
+      "description": "Facts about the lobby that hold for the whole game.",
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "mode": {
+          "description": "'solo' is eight players alone. 'duos' is four teams of two.",
+          "anyOf": [
+            { "enum": ["solo", "duos", "other"] },
+            { "$ref": "#/$defs/openName" }
+          ]
+        },
+        "startedAt": { "type": "string", "format": "date-time" },
+        "patch": { "type": "string", "description": "The game build the recording came from, such as '34.2.0'." },
+        "season": { "type": "string" },
+        "seatCount": { "type": "integer", "minimum": 1 },
+        "minionTypes": {
+          "type": ["array", "null"],
+          "items": { "$ref": "#/$defs/minionType" },
+          "description": "The minion types this lobby drew. null means the recorder does not know."
+        },
+        "anomaly": { "$ref": "#/$defs/card", "description": "A lobby-wide rule change, when the season has them." },
+        "rng": {
+          "type": "object",
+          "description": "Only a producer that generates its own randomness fills this in. It never replaces the recorded history.",
+          "properties": {
+            "seed": { "type": ["string", "integer"] },
+            "engine": { "type": "string" },
+            "ext": { "$ref": "#/$defs/ext" }
+          }
+        },
+        "ext": { "$ref": "#/$defs/ext" }
+      }
+    },
+
+    "player": {
+      "type": "object",
+      "required": ["id"],
+      "description": "One seat.",
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier", "description": "How the rest of the file names this seat." },
+        "seat": { "type": "integer", "minimum": 0, "description": "Table position, counted from 0." },
+        "name": { "type": "string", "description": "Display name. Leave it out if you would rather not publish it." },
+        "kind": {
+          "anyOf": [
+            { "enum": ["human", "bot", "unknown"] },
+            { "$ref": "#/$defs/openName" }
+          ]
+        },
+        "agent": {
+          "type": "object",
+          "description": "The program that made this seat's decisions, when a person did not.",
+          "properties": {
+            "name": { "type": "string" },
+            "version": { "type": "string" },
+            "ext": { "$ref": "#/$defs/ext" }
+          }
+        },
+        "teammate": { "$ref": "#/$defs/identifier", "description": "Duos only: the player sharing this team." },
+        "hero": { "$ref": "#/$defs/card" },
+        "heroPower": { "$ref": "#/$defs/card" },
+        "startingHealth": { "type": "integer" },
+        "startingArmor": { "type": "integer" },
+        "result": { "$ref": "#/$defs/playerResult" },
+        "ext": { "$ref": "#/$defs/ext" }
+      }
+    },
+
+    "playerResult": {
+      "type": "object",
+      "description": "How this seat finished. Every field is optional, because a one-seat recording may never learn some of them.",
+      "properties": {
+        "placement": { "type": "integer", "minimum": 1, "description": "1 is the winner." },
+        "health": { "type": "integer", "minimum": 0 },
+        "armor": { "type": "integer", "minimum": 0 },
+        "tier": { "type": "integer", "minimum": 1, "description": "Tavern tier at the end." },
+        "combatsPlayed": { "type": "integer", "minimum": 0 },
+        "combatsWon": { "type": "integer", "minimum": 0 },
+        "heroPowerUses": { "type": "integer", "minimum": 0, "description": "How many times this seat used its hero power all game." },
+        "eliminatedOnTurn": { "type": "integer", "minimum": 0 },
+        "trinkets": { "type": "array", "items": { "$ref": "#/$defs/card" }, "description": "Trinkets this seat still held at the end." },
+        "board": { "type": "array", "items": { "$ref": "#/$defs/card" }, "description": "The board this seat held when its game ended." },
+        "ext": { "$ref": "#/$defs/ext" }
+      }
+    },
+
+    "phase": {
+      "description": "'recruit' is the shopping half of a turn. 'combat' is the fight that follows it.",
+      "anyOf": [
+        { "enum": ["setup", "recruit", "combat", "end"] },
+        { "$ref": "#/$defs/openName" }
+      ]
+    },
+
+    "entryBase": {
+      "type": "object",
+      "required": ["seq", "kind"],
+      "properties": {
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Position in the history. It rises strictly across the file. Gaps are allowed and mean nothing was recorded there."
+        },
+        "kind": { "enum": ["action", "event", "state"] },
+        "turn": { "type": "integer", "minimum": 0 },
+        "phase": { "$ref": "#/$defs/phase" },
+        "at": { "type": "string", "format": "date-time" },
+        "elapsedMs": { "type": "integer", "minimum": 0, "description": "Milliseconds since the game started." },
+        "note": { "type": "string", "description": "A sentence for a person reading the file. Never authoritative." },
+        "ext": { "$ref": "#/$defs/ext" }
+      }
+    },
+
+    "entry": {
+      "oneOf": [
+        { "$ref": "#/$defs/actionEntry" },
+        { "$ref": "#/$defs/eventEntry" },
+        { "$ref": "#/$defs/stateEntry" }
+      ]
+    },
+
+    "actionEntry": {
+      "type": "object",
+      "description": "Something a player chose to do.",
+      "allOf": [
+        { "$ref": "#/$defs/entryBase" },
+        {
+          "required": ["kind", "actor", "action"],
+          "properties": {
+            "kind": { "const": "action" },
+            "actor": { "$ref": "#/$defs/identifier", "description": "The player who acted." },
+            "action": { "$ref": "#/$defs/actionVerb" },
+            "data": { "$ref": "#/$defs/actionData" },
+            "accepted": {
+              "type": "boolean",
+              "default": true,
+              "description": "False records an action the game refused. A refused action changes nothing."
+            },
+            "error": { "type": "string", "description": "Why it was refused." },
+            "decision": { "$ref": "#/$defs/decision" }
+          }
+        },
+        {
+          "if": { "properties": { "action": { "const": "buy" } }, "required": ["action"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["from"] } } }
+        },
+        {
+          "if": { "properties": { "action": { "const": "sell" } }, "required": ["action"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["target"] } } }
+        },
+        {
+          "if": { "properties": { "action": { "const": "play" } }, "required": ["action"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["from"] } } }
+        },
+        {
+          "if": { "properties": { "action": { "const": "move" } }, "required": ["action"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["from", "to"] } } }
+        },
+        {
+          "if": { "properties": { "action": { "const": "magnetize" } }, "required": ["action"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["from", "to"] } } }
+        },
+        {
+          "if": { "properties": { "action": { "const": "activate" } }, "required": ["action"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["target"] } } }
+        },
+        {
+          "if": { "properties": { "action": { "const": "choose" } }, "required": ["action"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["offer", "option"] } } }
+        },
+        {
+          "if": { "properties": { "action": { "const": "choose_hero" } }, "required": ["action"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["offer", "option"] } } }
+        },
+        {
+          "if": { "properties": { "action": { "const": "open_offer" } }, "required": ["action"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["offer"] } } }
+        },
+        {
+          "if": { "properties": { "action": { "const": "pass_card" } }, "required": ["action"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["from", "to"] } } }
+        }
+      ]
+    },
+
+    "actionVerb": {
+      "description": "What the player did.",
+      "anyOf": [
+        {
+          "enum": [
+            "choose_hero", "buy", "sell", "play", "move", "roll", "freeze", "unfreeze",
+            "upgrade", "hero_power", "activate", "magnetize", "choose", "open_offer",
+            "pass_card", "end_turn", "concede", "emote"
+          ]
+        },
+        { "$ref": "#/$defs/openName" }
+      ]
+    },
+
+    "actionData": {
+      "type": "object",
+      "description": "The parts of an action. Which parts are required depends on the verb.",
+      "properties": {
+        "from": { "$ref": "#/$defs/ref", "description": "Where the card came from." },
+        "to": { "$ref": "#/$defs/ref", "description": "Where it went." },
+        "target": { "$ref": "#/$defs/ref", "description": "The single card the action was aimed at." },
+        "targets": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ref" },
+          "description": "Every card the action was aimed at, in the order the player picked them."
+        },
+        "cost": { "type": "integer", "description": "What was paid." },
+        "costResource": {
+          "default": "gold",
+          "anyOf": [
+            { "enum": ["gold", "health", "none"] },
+            { "$ref": "#/$defs/openName" }
+          ]
+        },
+        "gold": { "type": "integer", "minimum": 0, "description": "Gold left after the action." },
+        "health": { "type": "integer", "description": "Health after the action." },
+        "armor": { "type": "integer", "minimum": 0 },
+        "tier": { "type": "integer", "minimum": 1, "description": "Tavern tier after the action." },
+        "offer": { "$ref": "#/$defs/identifier", "description": "The id of the offer event this choice answers." },
+        "option": { "type": "integer", "minimum": 0, "description": "Which option of that offer was taken, counted from 0." },
+        "mode": { "type": "integer", "minimum": 0, "description": "Which half of a Choose One card the player picked." },
+        "emote": { "type": "string" },
+        "ext": { "$ref": "#/$defs/ext" }
+      }
+    },
+
+    "decision": {
+      "type": "object",
+      "description": "Optional notes on how the choice was made. A program that ranks its options can say what it was choosing between. A person cannot, and leaves this out.",
+      "properties": {
+        "legalOptions": { "type": "integer", "minimum": 0, "description": "How many actions were legal at this moment." },
+        "probability": { "type": "number", "minimum": 0, "maximum": 1, "description": "How likely the chooser was to pick this one." },
+        "value": { "type": "number", "description": "The chooser's own score for the position." },
+        "considered": {
+          "type": "array",
+          "description": "Other actions that were on the table.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "action": { "$ref": "#/$defs/actionVerb" },
+              "data": { "$ref": "#/$defs/actionData" },
+              "probability": { "type": "number", "minimum": 0, "maximum": 1 },
+              "value": { "type": "number" }
+            }
+          }
+        },
+        "refusals": {
+          "type": "array",
+          "description": "Actions a rule removed before the chooser ever saw them. Anyone checking a suspect player needs the moves it was not allowed to make.",
+          "items": {
+            "type": "object",
+            "required": ["reason"],
+            "properties": {
+              "reason": { "type": "string" },
+              "count": { "type": "integer", "minimum": 0 },
+              "example": { "type": "string" },
+              "ext": { "$ref": "#/$defs/ext" }
+            }
+          }
+        },
+        "ext": { "$ref": "#/$defs/ext" }
+      }
+    },
+
+    "eventEntry": {
+      "type": "object",
+      "description": "Something the game did, rather than something a player chose.",
+      "allOf": [
+        { "$ref": "#/$defs/entryBase" },
+        {
+          "required": ["kind", "event"],
+          "properties": {
+            "kind": { "const": "event" },
+            "event": { "$ref": "#/$defs/eventVerb" },
+            "actor": { "$ref": "#/$defs/identifier", "description": "The player the event happened to, when it concerns one seat." },
+            "data": { "$ref": "#/$defs/eventData" }
+          }
+        },
+        {
+          "if": { "properties": { "event": { "const": "offer" } }, "required": ["event"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["id", "options"] } } }
+        },
+        {
+          "if": { "properties": { "event": { "const": "combat_start" } }, "required": ["event"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["sides"] } } }
+        },
+        {
+          "if": { "properties": { "event": { "const": "combat_end" } }, "required": ["event"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["sides"] } } }
+        },
+        {
+          "if": { "properties": { "event": { "const": "attack" } }, "required": ["event"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["attacker", "defender"] } } }
+        },
+        {
+          "if": { "properties": { "event": { "const": "damage" } }, "required": ["event"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["target", "amount"] } } }
+        },
+        {
+          "if": { "properties": { "event": { "const": "death" } }, "required": ["event"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["target"] } } }
+        },
+        {
+          "if": { "properties": { "event": { "const": "summon" } }, "required": ["event"] },
+          "then": { "required": ["data"], "properties": { "data": { "required": ["card"] } } }
+        }
+      ]
+    },
+
+    "eventVerb": {
+      "description": "What the game did.",
+      "anyOf": [
+        {
+          "enum": [
+            "game_start", "turn_start", "turn_end", "game_end",
+            "shop_dealt", "offer", "gold_granted", "income_changed",
+            "card_gained", "card_removed", "card_moved", "triple_created",
+            "stat_change", "keyword_change", "enchantment_added", "enchantment_removed",
+            "health_change", "pairing_announced", "player_eliminated",
+            "combat_start", "combat_end", "attack", "damage", "heal",
+            "divine_shield_lost", "death", "summon", "reborn", "trigger", "hero_damage"
+          ]
+        },
+        { "$ref": "#/$defs/openName" }
+      ]
+    },
+
+    "eventData": {
+      "type": "object",
+      "description": "The parts of an event. Which parts are required depends on the verb.",
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier", "description": "For an offer: the name a later 'choose' action points back at." },
+        "offerType": {
+          "description": "What sort of choice was put in front of the player.",
+          "anyOf": [
+            { "enum": ["hero", "discover", "tripleReward", "trinket", "darkGift", "quest", "reward", "buddy", "other"] },
+            { "$ref": "#/$defs/openName" }
+          ]
+        },
+        "options": {
+          "type": "array",
+          "description": "The choices on the table, counted from 0.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "cards": { "type": "array", "items": { "$ref": "#/$defs/card" } },
+              "label": { "type": "string" },
+              "ext": { "$ref": "#/$defs/ext" }
+            }
+          }
+        },
+        "hidden": {
+          "type": "boolean",
+          "description": "True when the player had to commit before seeing the options. The options are then listed as unknown cards."
+        },
+        "mandatory": { "type": "boolean", "description": "The player cannot decline." },
+        "cost": { "type": "integer" },
+        "reason": {
+          "description": "Why this happened, when the game gives a reason.",
+          "anyOf": [
+            {
+              "enum": [
+                "turnStart", "roll", "freeze", "purchase", "sale", "battlecry", "deathrattle",
+                "spell", "heroPower", "trinket", "aura", "combat", "budget", "timeout",
+                "conceded", "other"
+              ]
+            },
+            { "$ref": "#/$defs/openName" }
+          ]
+        },
+        "cards": { "type": "array", "items": { "$ref": "#/$defs/card" }, "description": "The cards this event concerns, such as a freshly dealt shop." },
+        "card": { "$ref": "#/$defs/card" },
+        "from": { "$ref": "#/$defs/ref" },
+        "to": { "$ref": "#/$defs/ref" },
+        "source": { "$ref": "#/$defs/ref", "description": "The card that caused this." },
+        "target": { "$ref": "#/$defs/ref" },
+        "attacker": { "$ref": "#/$defs/ref" },
+        "defender": { "$ref": "#/$defs/ref" },
+        "swing": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Which swing of a multi-attack this is. Windfury gives two swings a turn, Mega-Windfury four."
+        },
+        "amount": { "type": "integer" },
+        "attack": { "type": "integer", "description": "Change in attack, or the new value when 'absolute' is true." },
+        "health": { "type": "integer", "description": "Change in health, or the new value when 'absolute' is true." },
+        "absolute": { "type": "boolean", "default": false, "description": "The numbers are the new totals, not the change." },
+        "permanent": {
+          "type": "boolean",
+          "description": "The change outlives the fight and travels back to the shop with the minion."
+        },
+        "gained": { "type": "array", "items": { "$ref": "#/$defs/keyword" } },
+        "lost": { "type": "array", "items": { "$ref": "#/$defs/keyword" } },
+        "enchantment": { "$ref": "#/$defs/enchantment" },
+        "absorbed": { "type": "boolean", "description": "A Divine Shield swallowed the damage, so the target lost no health." },
+        "poisonous": { "type": "boolean", "description": "The damage destroys whatever it touches, however much health is left." },
+        "lethal": { "type": "boolean", "description": "The target died from this." },
+        "killer": { "$ref": "#/$defs/ref" },
+        "position": { "type": "integer", "minimum": 0, "description": "The board position a summoned minion appeared at, counted from 0." },
+        "times": { "type": "integer", "minimum": 1, "description": "How many times a trigger fired, when one entry stands for several firings." },
+        "turn": { "type": "integer", "minimum": 0 },
+        "gold": { "type": "integer" },
+        "tier": { "type": "integer" },
+        "upgradeCost": { "type": "integer", "minimum": 0, "description": "What the next tavern tier costs right now." },
+        "player": { "$ref": "#/$defs/identifier" },
+        "opponent": { "$ref": "#/$defs/identifier" },
+        "ghostOf": {
+          "$ref": "#/$defs/identifier",
+          "description": "The fight is against a copy of a knocked-out player's board. Nothing that happens to the copy affects the player who once owned it."
+        },
+        "combat": { "$ref": "#/$defs/identifier", "description": "Ties every event of one fight together." },
+        "sides": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/combatSide" } },
+        "firstAttacker": { "$ref": "#/$defs/identifier", "description": "The player whose board swings first." },
+        "winner": { "type": ["string", "null"], "description": "The winning player, or null for a draw." },
+        "placements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "player": { "$ref": "#/$defs/identifier" },
+              "placement": { "type": "integer", "minimum": 1 }
+            }
+          }
+        },
+        "placement": { "type": "integer", "minimum": 1 },
+        "standings": { "type": "array", "items": { "$ref": "#/$defs/standing" } },
+        "ext": { "$ref": "#/$defs/ext" }
+      }
+    },
+
+    "combatSide": {
+      "type": "object",
+      "description": "One half of a fight.",
+      "properties": {
+        "player": { "$ref": "#/$defs/identifier" },
+        "ghostOf": { "$ref": "#/$defs/identifier" },
+        "hero": { "$ref": "#/$defs/card" },
+        "heroPower": { "$ref": "#/$defs/card" },
+        "tier": { "type": "integer", "minimum": 1 },
+        "healthBefore": { "type": ["integer", "null"] },
+        "healthAfter": { "type": ["integer", "null"], "description": "null means the recorder could not see it." },
+        "armorBefore": { "type": ["integer", "null"] },
+        "armorAfter": { "type": ["integer", "null"] },
+        "damageTaken": { "type": ["integer", "null"], "minimum": 0 },
+        "board": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/card" },
+          "description": "The board sent into the fight, left to right."
+        },
+        "hand": { "$ref": "#/$defs/zone", "description": "Only needed for the few cards whose combat text reads the owner's hand." },
+        "survivors": { "type": "array", "items": { "$ref": "#/$defs/ref" } },
+        "eliminated": { "type": "boolean", "description": "This fight knocked the player out." },
+        "ext": { "$ref": "#/$defs/ext" }
+      }
+    },
+
+    "standing": {
+      "type": "object",
+      "description": "One row of the leaderboard, which is all a player normally sees of the other seats.",
+      "properties": {
+        "player": { "$ref": "#/$defs/identifier" },
+        "health": { "type": ["integer", "null"] },
+        "armor": { "type": ["integer", "null"] },
+        "tier": { "type": ["integer", "null"] },
+        "alive": { "type": "boolean" },
+        "placement": { "type": "integer", "minimum": 1 },
+        "ext": { "$ref": "#/$defs/ext" }
+      }
+    },
+
+    "stateEntry": {
+      "type": "object",
+      "description": "A full picture of one seat at one moment. Optional: a reader can also rebuild the state by replaying the entries.",
+      "allOf": [
+        { "$ref": "#/$defs/entryBase" },
+        {
+          "required": ["kind", "actor"],
+          "properties": {
+            "kind": { "const": "state" },
+            "actor": { "$ref": "#/$defs/identifier", "description": "The seat this picture is of." },
+            "reason": {
+              "anyOf": [
+                { "enum": ["turnStart", "turnEnd", "afterAction", "beforeCombat", "afterCombat", "checkpoint"] },
+                { "$ref": "#/$defs/openName" }
+              ]
+            },
+            "player": { "$ref": "#/$defs/seatState" },
+            "zones": {
+              "type": "object",
+              "description": "Keyed by zone name: board, hand, shop, trinkets.",
+              "additionalProperties": { "$ref": "#/$defs/zone" }
+            },
+            "standings": { "type": "array", "items": { "$ref": "#/$defs/standing" } },
+            "nextOpponent": {
+              "type": "object",
+              "description": "The seat this player will fight next, announced before the recruit phase ends.",
+              "properties": {
+                "player": { "$ref": "#/$defs/identifier" },
+                "ghostOf": { "$ref": "#/$defs/identifier" },
+                "ext": { "$ref": "#/$defs/ext" }
+              }
+            }
+          }
+        }
+      ]
+    },
+
+    "seatState": {
+      "type": "object",
+      "description": "The numbers that describe a seat, apart from its cards.",
+      "properties": {
+        "health": { "type": "integer" },
+        "armor": { "type": "integer", "minimum": 0 },
+        "tier": { "type": "integer", "minimum": 1, "description": "Tavern tier: how strong the cards in this seat's shop can be." },
+        "gold": { "type": "integer", "minimum": 0 },
+        "goldCap": { "type": "integer", "minimum": 0, "description": "The most gold this seat can be given at the start of a turn." },
+        "upgradeCost": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "What the next tavern tier costs right now. null at the top tier."
+        },
+        "rollCost": { "type": "integer", "minimum": 0 },
+        "heroPowerUses": { "type": "integer", "minimum": 0 },
+        "heroPowerReady": { "type": "boolean" },
+        "alive": { "type": "boolean" },
+        "ext": { "$ref": "#/$defs/ext" }
+      }
+    }
+  }
+}

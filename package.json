@@ -1,0 +1,16 @@
+{
+  "name": "battlegrounds-history-data",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An engine-neutral data format for recording Hearthstone Battlegrounds game history.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "validate": "node tools/validate.mjs examples/*.json examples/*.yaml"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "js-yaml": "^4.1.0"
+  }
+}
