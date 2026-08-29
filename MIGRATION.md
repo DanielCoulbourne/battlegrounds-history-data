@@ -24,6 +24,8 @@ the game with facts about the job that produced the file.
 This page maps every field of that shape onto this format, and names the four
 fields that deliberately have no home.
 
+It targets format version 1.1.
+
 ## The overall conversion
 
 1. One `games[]` entry becomes one file.
@@ -58,7 +60,7 @@ fields that deliberately have no home.
 | `ownedTrinkets[].id` | `players[].result.trinkets[].cardId` |
 | `ownedTrinkets[].name` | `players[].result.trinkets[].name` |
 | `ownedTrinkets[].text` | `players[].result.trinkets[].text` |
-| `ownedTrinkets[].greater` | `players[].result.trinkets[].ext`, or a `keywords` entry of `x-greaterTrinket`. Lesser and greater are one season's split, so the format does not name them. |
+| `ownedTrinkets[].greater` | `players[].result.trinkets[].trinketTier`: `"greater"` when true, `"lesser"` when false or absent. |
 | `placement` | `players[].result.placement` |
 | `health` | `players[].result.health` |
 | `wins` | `players[].result.combatsWon` |
@@ -101,7 +103,7 @@ fields that deliberately have no home.
 | `trinkets[]` | an `offer` event with `offerType: "trinket"` |
 | `trinkets[].name` | an option's `cards[0].name` |
 | `trinkets[].cost` | that card's `cost` |
-| `trinkets[].greater` | as for `ownedTrinkets[].greater` above |
+| `trinkets[].greater` | the option card's `trinketTier`, and the `offer` event's `offerType` (`greaterTrinket` or `lesserTrinket`) |
 | `opponent.seat` | `pairing_announced` `data.opponent`, and `state.nextOpponent.player` |
 | `opponent.hero` | `players[].hero.name` for that seat |
 | `opponent.hp`, `opponent.tier` | `state.standings[]` for that seat |

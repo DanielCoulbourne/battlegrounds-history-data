@@ -1,7 +1,7 @@
 # full-game.yaml — the same data as full-game.json, in YAML.
-# Both files validate against schema/bg-history-1.0.schema.json.
+# Both files validate against schema/bg-history-1.1.schema.json.
 format: battlegrounds-history
-version: '1.0'
+version: '1.1'
 cardIdScheme: hearthstone
 recording:
   id: example-full-game
@@ -321,18 +321,34 @@ history:
         health: 10
         tier: 1
         alive: true
+        hero:
+          cardId: TB_BaconShop_HERO_30
+          name: Nefarian
+          type: hero
       - player: p2
         health: 10
         tier: 1
         alive: true
+        hero:
+          cardId: TB_BaconShop_HERO_08
+          name: Illidan Stormrage
+          type: hero
       - player: p3
         health: 10
         tier: 1
         alive: true
+        hero:
+          cardId: BG22_HERO_002
+          name: Drek'Thar
+          type: hero
       - player: p4
         health: 10
         tier: 1
         alive: true
+        hero:
+          cardId: BG22_HERO_003
+          name: Vanndar Stormpike
+          type: hero
   - seq: 13
     kind: action
     actor: p1
@@ -893,18 +909,34 @@ history:
           tier: 2
           alive: true
           placement: 1
+          hero:
+            cardId: TB_BaconShop_HERO_30
+            name: Nefarian
+            type: hero
         - player: p4
           health: 0
           tier: 1
           alive: false
           placement: 2
+          hero:
+            cardId: BG22_HERO_003
+            name: Vanndar Stormpike
+            type: hero
         - player: p3
           health: 0
           tier: 1
           alive: false
           placement: 3
+          hero:
+            cardId: BG22_HERO_002
+            name: Drek'Thar
+            type: hero
         - player: p2
           health: 0
           tier: 1
           alive: false
           placement: 4
+          hero:
+            cardId: TB_BaconShop_HERO_08
+            name: Illidan Stormrage
+            type: hero

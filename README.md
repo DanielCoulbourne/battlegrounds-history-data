@@ -54,7 +54,7 @@ minion, plays it, ends the turn, and wins the fight that follows.
 ```json
 {
   "format": "battlegrounds-history",
-  "version": "1.0",
+  "version": "1.1",
   "recording": {
     "id": "readme-example",
     "recorder": { "name": "Example Tracker", "version": "0.1.0", "kind": "tracker" },
@@ -137,7 +137,7 @@ the same schema:
 
 ```yaml
 format: battlegrounds-history
-version: '1.0'
+version: '1.1'
 recording:
   id: readme-example
   recorder: { name: Example Tracker, version: 0.1.0, kind: tracker }
@@ -183,7 +183,7 @@ node tools/validate.mjs mygame.bgh.yaml   # YAML works the same way
 ```
 
 To validate with your own tools, point any JSON Schema draft 2020-12 validator at
-`schema/bg-history-1.0.schema.json`. For YAML, load it into data first, then
+`schema/bg-history-1.1.schema.json`. For YAML, load it into data first, then
 validate the data.
 
 Python, for example:
@@ -191,7 +191,7 @@ Python, for example:
 ```python
 import json, yaml, jsonschema
 
-schema = json.load(open("schema/bg-history-1.0.schema.json"))
+schema = json.load(open("schema/bg-history-1.1.schema.json"))
 doc = yaml.safe_load(open("mygame.bgh.yaml"))
 jsonschema.Draft202012Validator(schema).validate(doc)
 ```

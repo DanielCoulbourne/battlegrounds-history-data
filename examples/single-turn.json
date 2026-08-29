@@ -1,6 +1,6 @@
 {
   "format": "battlegrounds-history",
-  "version": "1.0",
+  "version": "1.1",
   "cardIdScheme": "hearthstone",
   "recording": {
     "id": "example-single-turn",
@@ -28,14 +28,24 @@
     "mode": "solo",
     "patch": "34.2.0",
     "seatCount": 8,
-    "minionTypes": ["beast", "elemental", "mech", "murloc", "quilboar"]
+    "minionTypes": [
+      "beast",
+      "elemental",
+      "mech",
+      "murloc",
+      "quilboar"
+    ]
   },
   "players": [
     {
       "id": "p1",
       "seat": 0,
       "kind": "human",
-      "hero": { "cardId": "TB_BaconShop_HERO_08", "name": "Illidan Stormrage", "type": "hero" },
+      "hero": {
+        "cardId": "TB_BaconShop_HERO_08",
+        "name": "Illidan Stormrage",
+        "type": "hero"
+      },
       "heroPower": {
         "cardId": "TB_BaconShop_HP_069",
         "name": "Wingmen",
@@ -45,13 +55,76 @@
       "startingHealth": 30,
       "startingArmor": 15
     },
-    { "id": "p2", "seat": 1, "kind": "unknown" },
-    { "id": "p3", "seat": 2, "kind": "unknown" },
-    { "id": "p4", "seat": 3, "kind": "unknown" },
-    { "id": "p5", "seat": 4, "kind": "unknown" },
-    { "id": "p6", "seat": 5, "kind": "unknown" },
-    { "id": "p7", "seat": 6, "kind": "unknown" },
-    { "id": "p8", "seat": 7, "kind": "unknown" }
+    {
+      "id": "p2",
+      "seat": 1,
+      "kind": "unknown",
+      "hero": {
+        "cardId": "TB_BaconShop_HERO_27",
+        "name": "Sindragosa",
+        "type": "hero"
+      }
+    },
+    {
+      "id": "p3",
+      "seat": 2,
+      "kind": "unknown",
+      "hero": {
+        "cardId": "TB_BaconShop_HERO_30",
+        "name": "Nefarian",
+        "type": "hero"
+      }
+    },
+    {
+      "id": "p4",
+      "seat": 3,
+      "kind": "unknown",
+      "hero": {
+        "cardId": "BG22_HERO_002",
+        "name": "Drek'Thar",
+        "type": "hero"
+      }
+    },
+    {
+      "id": "p5",
+      "seat": 4,
+      "kind": "unknown",
+      "hero": {
+        "cardId": "BG22_HERO_003",
+        "name": "Vanndar Stormpike",
+        "type": "hero"
+      }
+    },
+    {
+      "id": "p6",
+      "seat": 5,
+      "kind": "unknown",
+      "hero": {
+        "name": "Deathwing",
+        "type": "hero",
+        "unknown": true
+      }
+    },
+    {
+      "id": "p7",
+      "seat": 6,
+      "kind": "unknown",
+      "hero": {
+        "name": "The Lich King",
+        "type": "hero",
+        "unknown": true
+      }
+    },
+    {
+      "id": "p8",
+      "seat": 7,
+      "kind": "unknown",
+      "hero": {
+        "name": "Millificent Manastorm",
+        "type": "hero",
+        "unknown": true
+      }
+    }
   ],
   "history": [
     {
@@ -59,25 +132,95 @@
       "kind": "event",
       "event": "turn_start",
       "actor": "p1",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
-      "data": { "turn": 8, "gold": 8, "tier": 3, "upgradeCost": 6 }
+      "data": {
+        "turn": 8,
+        "gold": 10,
+        "tier": 3,
+        "upgradeCost": 5
+      }
     },
     {
       "seq": 2,
       "kind": "event",
       "event": "shop_dealt",
       "actor": "p1",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
       "data": {
         "reason": "turnStart",
         "cards": [
-          { "entity": "s1", "cardId": "BG31_803", "name": "Buzzing Vermin", "type": "minion", "attack": 1, "health": 1, "tier": 1, "minionTypes": ["beast"], "keywords": ["taunt"], "cost": 3 },
-          { "entity": "s2", "cardId": "BG_BOT_911", "name": "Annoy-o-Module", "type": "minion", "attack": 2, "health": 4, "tier": 3, "minionTypes": ["mech"], "keywords": ["magnetic", "taunt", "divineShield"], "cost": 3 },
-          { "entity": "s3", "cardId": "BG33_886", "name": "Tusked Camper", "type": "minion", "attack": 2, "health": 3, "tier": 1, "minionTypes": ["quilboar"], "cost": 3 },
-          { "entity": "s4", "cardId": "BG32_330", "name": "Flighty Scout", "type": "minion", "attack": 3, "health": 3, "tier": 1, "minionTypes": ["murloc"], "cost": 3 },
-          { "entity": "s5", "cardId": "BG28_573", "name": "Upper Hand", "type": "spell", "tier": 2, "cost": 2, "playable": true, "text": "Set a random enemy minion's Health to 1." }
+          {
+            "entity": "s1",
+            "cardId": "BG31_803",
+            "name": "Buzzing Vermin",
+            "type": "minion",
+            "attack": 1,
+            "health": 1,
+            "tier": 1,
+            "minionTypes": [
+              "beast"
+            ],
+            "keywords": [
+              "taunt"
+            ],
+            "cost": 3
+          },
+          {
+            "entity": "s2",
+            "cardId": "BG_BOT_911",
+            "name": "Annoy-o-Module",
+            "type": "minion",
+            "attack": 2,
+            "health": 4,
+            "tier": 3,
+            "minionTypes": [
+              "mech"
+            ],
+            "keywords": [
+              "magnetic",
+              "taunt",
+              "divineShield"
+            ],
+            "cost": 3
+          },
+          {
+            "entity": "s3",
+            "cardId": "BG33_886",
+            "name": "Tusked Camper",
+            "type": "minion",
+            "attack": 2,
+            "health": 3,
+            "tier": 1,
+            "minionTypes": [
+              "quilboar"
+            ],
+            "cost": 3
+          },
+          {
+            "entity": "s4",
+            "cardId": "BG32_330",
+            "name": "Flighty Scout",
+            "type": "minion",
+            "attack": 3,
+            "health": 3,
+            "tier": 1,
+            "minionTypes": [
+              "murloc"
+            ],
+            "cost": 3
+          },
+          {
+            "entity": "s5",
+            "cardId": "BG28_573",
+            "name": "Upper Hand",
+            "type": "spell",
+            "tier": 2,
+            "cost": 2,
+            "playable": true,
+            "text": "Set a random enemy minion's Health to 1."
+          }
         ]
       }
     },
@@ -85,16 +228,16 @@
       "seq": 3,
       "kind": "state",
       "actor": "p1",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
       "reason": "turnStart",
       "player": {
         "health": 27,
         "armor": 0,
         "tier": 3,
-        "gold": 8,
+        "gold": 10,
         "goldCap": 10,
-        "upgradeCost": 6,
+        "upgradeCost": 5,
         "rollCost": 1,
         "heroPowerUses": 0,
         "alive": true
@@ -103,50 +246,206 @@
         "board": {
           "cards": [
             {
-              "entity": "e12", "cardId": "BG31_803", "name": "Buzzing Vermin", "type": "minion",
-              "attack": 3, "health": 3, "tier": 1, "minionTypes": ["beast"], "keywords": ["taunt"],
+              "entity": "e12",
+              "cardId": "BG31_803",
+              "name": "Buzzing Vermin",
+              "type": "minion",
+              "attack": 3,
+              "health": 3,
+              "tier": 1,
+              "minionTypes": [
+                "beast"
+              ],
+              "keywords": [
+                "taunt"
+              ],
               "enchantments": [
-                { "name": "Titanic Might", "text": "+2/+2", "attack": 2, "health": 2 }
+                {
+                  "name": "Titanic Might",
+                  "text": "+2/+2",
+                  "attack": 2,
+                  "health": 2
+                }
               ]
             },
-            { "entity": "e19", "cardId": "BG26_152", "name": "Utility Drone", "type": "minion", "attack": 4, "health": 5, "tier": 3, "minionTypes": ["mech"] },
-            { "entity": "e27", "cardId": "BG32_330", "name": "Flighty Scout", "type": "minion", "attack": 3, "health": 3, "tier": 1, "minionTypes": ["murloc"] },
-            { "entity": "e28", "cardId": "BG32_330", "name": "Flighty Scout", "type": "minion", "attack": 3, "health": 3, "tier": 1, "minionTypes": ["murloc"] }
+            {
+              "entity": "e19",
+              "cardId": "BG26_152",
+              "name": "Utility Drone",
+              "type": "minion",
+              "attack": 4,
+              "health": 5,
+              "tier": 3,
+              "minionTypes": [
+                "mech"
+              ]
+            },
+            {
+              "entity": "e27",
+              "cardId": "BG32_330",
+              "name": "Flighty Scout",
+              "type": "minion",
+              "attack": 3,
+              "health": 3,
+              "tier": 1,
+              "minionTypes": [
+                "murloc"
+              ]
+            },
+            {
+              "entity": "e28",
+              "cardId": "BG32_330",
+              "name": "Flighty Scout",
+              "type": "minion",
+              "attack": 3,
+              "health": 3,
+              "tier": 1,
+              "minionTypes": [
+                "murloc"
+              ]
+            }
           ],
           "capacity": 7
         },
-        "hand": { "cards": [], "capacity": 10 },
-        "shop": { "cards": [], "frozen": false },
+        "hand": {
+          "cards": [],
+          "capacity": 10
+        },
+        "shop": {
+          "cards": [],
+          "frozen": false
+        },
         "trinkets": {
           "cards": [
-            { "entity": "t1", "cardId": "BG30_MagicItem_709", "name": "Electromagnetic Device", "type": "trinket" }
+            {
+              "entity": "t1",
+              "cardId": "BG30_MagicItem_709",
+              "name": "Electromagnetic Device",
+              "type": "trinket",
+              "trinketTier": "lesser"
+            },
+            {
+              "entity": "t2",
+              "cardId": "BG36_MagicItem_220",
+              "name": "Glowing Crystal",
+              "type": "trinket",
+              "trinketTier": "greater"
+            }
           ]
         }
       },
       "standings": [
-        { "player": "p1", "health": 27, "tier": 3, "alive": true },
-        { "player": "p2", "health": 18, "tier": 3, "alive": true },
-        { "player": "p3", "health": 0, "tier": 2, "alive": false, "placement": 8 },
-        { "player": "p4", "health": 22, "tier": 4, "alive": true },
-        { "player": "p5", "health": 31, "tier": 3, "alive": true },
-        { "player": "p6", "health": 9, "tier": 4, "alive": true },
-        { "player": "p7", "health": 26, "tier": 2, "alive": true },
-        { "player": "p8", "health": 14, "tier": 3, "alive": true }
+        {
+          "player": "p1",
+          "health": 27,
+          "tier": 3,
+          "alive": true,
+          "hero": {
+            "cardId": "TB_BaconShop_HERO_08",
+            "name": "Illidan Stormrage",
+            "type": "hero"
+          }
+        },
+        {
+          "player": "p2",
+          "health": 18,
+          "tier": 3,
+          "alive": true,
+          "hero": {
+            "cardId": "TB_BaconShop_HERO_27",
+            "name": "Sindragosa",
+            "type": "hero"
+          }
+        },
+        {
+          "player": "p3",
+          "health": 0,
+          "tier": 2,
+          "alive": false,
+          "placement": 8,
+          "hero": {
+            "cardId": "TB_BaconShop_HERO_30",
+            "name": "Nefarian",
+            "type": "hero"
+          }
+        },
+        {
+          "player": "p4",
+          "health": 22,
+          "tier": 4,
+          "alive": true,
+          "hero": {
+            "cardId": "BG22_HERO_002",
+            "name": "Drek'Thar",
+            "type": "hero"
+          }
+        },
+        {
+          "player": "p5",
+          "health": 31,
+          "tier": 3,
+          "alive": true,
+          "hero": {
+            "cardId": "BG22_HERO_003",
+            "name": "Vanndar Stormpike",
+            "type": "hero"
+          }
+        },
+        {
+          "player": "p6",
+          "health": 9,
+          "tier": 4,
+          "alive": true,
+          "hero": {
+            "name": "Deathwing",
+            "type": "hero",
+            "unknown": true
+          }
+        },
+        {
+          "player": "p7",
+          "health": 26,
+          "tier": 2,
+          "alive": true,
+          "hero": {
+            "name": "The Lich King",
+            "type": "hero",
+            "unknown": true
+          }
+        },
+        {
+          "player": "p8",
+          "health": 14,
+          "tier": 3,
+          "alive": true,
+          "hero": {
+            "name": "Millificent Manastorm",
+            "type": "hero",
+            "unknown": true
+          }
+        }
       ],
-      "note": "The shop is listed empty here because seq 2 already dealt it; a reader that wants the shop reads that entry."
+      "note": "The shop is listed empty here because seq 2 already dealt it; a reader that wants the shop reads that entry. Three of the heroes carry a name and unknown: true, because this tracker reads portraits and had not matched those three to a card id."
     },
     {
       "seq": 4,
       "kind": "action",
       "actor": "p1",
       "action": "buy",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
       "data": {
-        "from": { "zone": "shop", "index": 1, "entity": "s2" },
-        "to": { "zone": "hand", "index": 0 },
+        "from": {
+          "zone": "shop",
+          "index": 1,
+          "entity": "s2"
+        },
+        "to": {
+          "zone": "hand",
+          "index": 0
+        },
         "cost": 3,
-        "gold": 5
+        "gold": 7
       },
       "note": "bought Annoy-o-Module"
     },
@@ -155,11 +454,19 @@
       "kind": "action",
       "actor": "p1",
       "action": "magnetize",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
       "data": {
-        "from": { "zone": "hand", "index": 0, "entity": "s2" },
-        "to": { "zone": "board", "index": 1, "entity": "e19" }
+        "from": {
+          "zone": "hand",
+          "index": 0,
+          "entity": "s2"
+        },
+        "to": {
+          "zone": "board",
+          "index": 1,
+          "entity": "e19"
+        }
       },
       "note": "fused Annoy-o-Module onto Utility Drone"
     },
@@ -168,13 +475,19 @@
       "kind": "event",
       "event": "stat_change",
       "actor": "p1",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
       "data": {
-        "target": { "zone": "board", "entity": "e19" },
+        "target": {
+          "zone": "board",
+          "entity": "e19"
+        },
         "attack": 2,
         "health": 4,
-        "source": { "zone": "board", "entity": "s2" },
+        "source": {
+          "zone": "board",
+          "entity": "s2"
+        },
         "reason": "other"
       }
     },
@@ -183,12 +496,21 @@
       "kind": "event",
       "event": "keyword_change",
       "actor": "p1",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
       "data": {
-        "target": { "zone": "board", "entity": "e19" },
-        "gained": ["taunt", "divineShield"],
-        "source": { "zone": "board", "entity": "s2" }
+        "target": {
+          "zone": "board",
+          "entity": "e19"
+        },
+        "gained": [
+          "taunt",
+          "divineShield"
+        ],
+        "source": {
+          "zone": "board",
+          "entity": "s2"
+        }
       }
     },
     {
@@ -196,19 +518,30 @@
       "kind": "action",
       "actor": "p1",
       "action": "buy",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
       "data": {
-        "from": { "zone": "shop", "index": 3, "entity": "s4" },
-        "to": { "zone": "hand", "index": 0 },
+        "from": {
+          "zone": "shop",
+          "index": 3,
+          "entity": "s4"
+        },
+        "to": {
+          "zone": "hand",
+          "index": 0
+        },
         "cost": 3,
-        "gold": 2
+        "gold": 4
       },
       "decision": {
         "legalOptions": 9,
         "probability": 0.72,
         "refusals": [
-          { "reason": "not enough gold", "count": 2, "example": "upgrade the tavern" }
+          {
+            "reason": "not enough gold",
+            "count": 2,
+            "example": "upgrade the tavern"
+          }
         ]
       }
     },
@@ -217,11 +550,18 @@
       "kind": "action",
       "actor": "p1",
       "action": "play",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
       "data": {
-        "from": { "zone": "hand", "index": 0, "entity": "s4" },
-        "to": { "zone": "board", "index": 4 }
+        "from": {
+          "zone": "hand",
+          "index": 0,
+          "entity": "s4"
+        },
+        "to": {
+          "zone": "board",
+          "index": 4
+        }
       }
     },
     {
@@ -229,10 +569,22 @@
       "kind": "event",
       "event": "triple_created",
       "actor": "p1",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
       "data": {
-        "card": { "entity": "e60", "cardId": "BG32_330", "name": "Flighty Scout", "type": "minion", "attack": 6, "health": 6, "tier": 1, "golden": true, "minionTypes": ["murloc"] },
+        "card": {
+          "entity": "e60",
+          "cardId": "BG32_330",
+          "name": "Flighty Scout",
+          "type": "minion",
+          "attack": 6,
+          "health": 6,
+          "tier": 1,
+          "golden": true,
+          "minionTypes": [
+            "murloc"
+          ]
+        },
         "position": 2
       },
       "note": "Three copies of Flighty Scout became one golden copy."
@@ -242,16 +594,64 @@
       "kind": "event",
       "event": "offer",
       "actor": "p1",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
       "data": {
         "id": "offer-t8-triple",
         "offerType": "tripleReward",
         "mandatory": true,
         "options": [
-          { "cards": [ { "entity": "o1", "cardId": "BG35_341", "name": "Enchanted Sentinel", "type": "minion", "attack": 3, "health": 5, "tier": 4, "minionTypes": ["mech"], "keywords": ["magnetic"] } ] },
-          { "cards": [ { "entity": "o2", "cardId": "BG27_005", "name": "Timecap'n Hooktail", "type": "minion", "attack": 4, "health": 4, "tier": 4, "minionTypes": ["pirate"] } ] },
-          { "cards": [ { "entity": "o3", "cardId": "BG36_351", "name": "Moat Custodian", "type": "minion", "attack": 4, "health": 6, "tier": 4, "minionTypes": ["elemental"] } ] }
+          {
+            "cards": [
+              {
+                "entity": "o1",
+                "cardId": "BG35_341",
+                "name": "Enchanted Sentinel",
+                "type": "minion",
+                "attack": 3,
+                "health": 5,
+                "tier": 4,
+                "minionTypes": [
+                  "mech"
+                ],
+                "keywords": [
+                  "magnetic"
+                ]
+              }
+            ]
+          },
+          {
+            "cards": [
+              {
+                "entity": "o2",
+                "cardId": "BG27_005",
+                "name": "Timecap'n Hooktail",
+                "type": "minion",
+                "attack": 4,
+                "health": 4,
+                "tier": 4,
+                "minionTypes": [
+                  "pirate"
+                ]
+              }
+            ]
+          },
+          {
+            "cards": [
+              {
+                "entity": "o3",
+                "cardId": "BG36_351",
+                "name": "Moat Custodian",
+                "type": "minion",
+                "attack": 4,
+                "health": 6,
+                "tier": 4,
+                "minionTypes": [
+                  "elemental"
+                ]
+              }
+            ]
+          }
         ]
       },
       "note": "Making a golden copy lets the player pick one card from a tier above their own."
@@ -261,20 +661,40 @@
       "kind": "action",
       "actor": "p1",
       "action": "choose",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
-      "data": { "offer": "offer-t8-triple", "option": 0 }
+      "data": {
+        "offer": "offer-t8-triple",
+        "option": 0
+      }
     },
     {
       "seq": 13,
       "kind": "event",
       "event": "card_gained",
       "actor": "p1",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
       "data": {
-        "card": { "entity": "o1", "cardId": "BG35_341", "name": "Enchanted Sentinel", "type": "minion", "attack": 3, "health": 5, "tier": 4, "minionTypes": ["mech"], "keywords": ["magnetic"] },
-        "to": { "zone": "hand", "index": 0 },
+        "card": {
+          "entity": "o1",
+          "cardId": "BG35_341",
+          "name": "Enchanted Sentinel",
+          "type": "minion",
+          "attack": 3,
+          "health": 5,
+          "tier": 4,
+          "minionTypes": [
+            "mech"
+          ],
+          "keywords": [
+            "magnetic"
+          ]
+        },
+        "to": {
+          "zone": "hand",
+          "index": 0
+        },
         "reason": "other"
       }
     },
@@ -283,11 +703,18 @@
       "kind": "action",
       "actor": "p1",
       "action": "play",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
       "data": {
-        "from": { "zone": "hand", "index": 0, "entity": "o1" },
-        "to": { "zone": "board", "index": 3 }
+        "from": {
+          "zone": "hand",
+          "index": 0,
+          "entity": "o1"
+        },
+        "to": {
+          "zone": "board",
+          "index": 3
+        }
       }
     },
     {
@@ -295,24 +722,84 @@
       "kind": "action",
       "actor": "p1",
       "action": "roll",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
-      "data": { "cost": 1, "gold": 1 }
+      "data": {
+        "cost": 1,
+        "gold": 3
+      }
     },
     {
       "seq": 16,
       "kind": "event",
       "event": "shop_dealt",
       "actor": "p1",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
       "data": {
         "reason": "roll",
         "cards": [
-          { "entity": "s6", "cardId": "BG26_147", "name": "Accord-o-Tron", "type": "minion", "attack": 3, "health": 3, "tier": 3, "minionTypes": ["mech"], "keywords": ["magnetic"], "cost": 3 },
-          { "entity": "s7", "cardId": "BG31_803", "name": "Buzzing Vermin", "type": "minion", "attack": 1, "health": 1, "tier": 1, "minionTypes": ["beast"], "keywords": ["taunt"], "cost": 3 },
-          { "entity": "s8", "cardId": "BG33_886", "name": "Tusked Camper", "type": "minion", "attack": 2, "health": 3, "tier": 1, "minionTypes": ["quilboar"], "cost": 3 },
-          { "entity": "s9", "cardId": "BG26_146", "name": "Lullabot", "type": "minion", "attack": 2, "health": 2, "tier": 1, "minionTypes": ["mech"], "keywords": ["magnetic"], "cost": 3 }
+          {
+            "entity": "s6",
+            "cardId": "BG26_147",
+            "name": "Accord-o-Tron",
+            "type": "minion",
+            "attack": 3,
+            "health": 3,
+            "tier": 3,
+            "minionTypes": [
+              "mech"
+            ],
+            "keywords": [
+              "magnetic"
+            ],
+            "cost": 3
+          },
+          {
+            "entity": "s7",
+            "cardId": "BG31_803",
+            "name": "Buzzing Vermin",
+            "type": "minion",
+            "attack": 1,
+            "health": 1,
+            "tier": 1,
+            "minionTypes": [
+              "beast"
+            ],
+            "keywords": [
+              "taunt"
+            ],
+            "cost": 3
+          },
+          {
+            "entity": "s8",
+            "cardId": "BG33_886",
+            "name": "Tusked Camper",
+            "type": "minion",
+            "attack": 2,
+            "health": 3,
+            "tier": 1,
+            "minionTypes": [
+              "quilboar"
+            ],
+            "cost": 3
+          },
+          {
+            "entity": "s9",
+            "cardId": "BG26_146",
+            "name": "Lullabot",
+            "type": "minion",
+            "attack": 2,
+            "health": 2,
+            "tier": 1,
+            "minionTypes": [
+              "mech"
+            ],
+            "keywords": [
+              "magnetic"
+            ],
+            "cost": 3
+          }
         ]
       }
     },
@@ -321,7 +808,7 @@
       "kind": "action",
       "actor": "p1",
       "action": "freeze",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
       "note": "held the shop so the two Mech parts are still there next turn"
     },
@@ -330,24 +817,28 @@
       "kind": "event",
       "event": "pairing_announced",
       "actor": "p1",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
-      "data": { "opponent": "p4" }
+      "data": {
+        "opponent": "p4"
+      }
     },
     {
       "seq": 19,
       "kind": "action",
       "actor": "p1",
       "action": "end_turn",
-      "turn": 8,
+      "turn": 10,
       "phase": "recruit",
-      "data": { "gold": 1 }
+      "data": {
+        "gold": 3
+      }
     },
     {
       "seq": 20,
       "kind": "event",
       "event": "combat_start",
-      "turn": 8,
+      "turn": 10,
       "phase": "combat",
       "data": {
         "combat": "c8",
@@ -358,24 +849,108 @@
             "tier": 3,
             "healthBefore": 27,
             "board": [
-              { "entity": "e12", "cardId": "BG31_803", "name": "Buzzing Vermin", "attack": 3, "health": 3, "tier": 1, "minionTypes": ["beast"], "keywords": ["taunt"] },
               {
-                "entity": "e19", "cardId": "BG26_152", "name": "Utility Drone", "attack": 6, "health": 9, "tier": 3,
-                "minionTypes": ["mech"], "keywords": ["taunt", "divineShield"],
-                "attached": [ { "entity": "s2", "cardId": "BG_BOT_911", "name": "Annoy-o-Module" } ]
+                "entity": "e12",
+                "cardId": "BG31_803",
+                "name": "Buzzing Vermin",
+                "attack": 3,
+                "health": 3,
+                "tier": 1,
+                "minionTypes": [
+                  "beast"
+                ],
+                "keywords": [
+                  "taunt"
+                ]
               },
-              { "entity": "e60", "cardId": "BG32_330", "name": "Flighty Scout", "attack": 6, "health": 6, "tier": 1, "golden": true, "minionTypes": ["murloc"] },
-              { "entity": "o1", "cardId": "BG35_341", "name": "Enchanted Sentinel", "attack": 3, "health": 5, "tier": 4, "minionTypes": ["mech"] }
-            ]
+              {
+                "entity": "e19",
+                "cardId": "BG26_152",
+                "name": "Utility Drone",
+                "attack": 6,
+                "health": 9,
+                "tier": 3,
+                "minionTypes": [
+                  "mech"
+                ],
+                "keywords": [
+                  "taunt",
+                  "divineShield"
+                ],
+                "attached": [
+                  {
+                    "entity": "s2",
+                    "cardId": "BG_BOT_911",
+                    "name": "Annoy-o-Module"
+                  }
+                ]
+              },
+              {
+                "entity": "e60",
+                "cardId": "BG32_330",
+                "name": "Flighty Scout",
+                "attack": 6,
+                "health": 6,
+                "tier": 1,
+                "golden": true,
+                "minionTypes": [
+                  "murloc"
+                ]
+              },
+              {
+                "entity": "o1",
+                "cardId": "BG35_341",
+                "name": "Enchanted Sentinel",
+                "attack": 3,
+                "health": 5,
+                "tier": 4,
+                "minionTypes": [
+                  "mech"
+                ]
+              }
+            ],
+            "hero": {
+              "cardId": "TB_BaconShop_HERO_08",
+              "name": "Illidan Stormrage",
+              "type": "hero"
+            }
           },
           {
             "player": "p4",
             "tier": 4,
             "healthBefore": 22,
             "board": [
-              { "entity": "x1", "cardId": "BG33_886", "name": "Tusked Camper", "attack": 5, "health": 6, "tier": 1, "minionTypes": ["quilboar"], "keywords": ["taunt"] },
-              { "entity": "x2", "cardId": "BG31_803", "name": "Buzzing Vermin", "attack": 4, "health": 4, "tier": 1, "minionTypes": ["beast"] }
-            ]
+              {
+                "entity": "x1",
+                "cardId": "BG33_886",
+                "name": "Tusked Camper",
+                "attack": 5,
+                "health": 6,
+                "tier": 1,
+                "minionTypes": [
+                  "quilboar"
+                ],
+                "keywords": [
+                  "taunt"
+                ]
+              },
+              {
+                "entity": "x2",
+                "cardId": "BG31_803",
+                "name": "Buzzing Vermin",
+                "attack": 4,
+                "health": 4,
+                "tier": 1,
+                "minionTypes": [
+                  "beast"
+                ]
+              }
+            ],
+            "hero": {
+              "cardId": "BG22_HERO_002",
+              "name": "Drek'Thar",
+              "type": "hero"
+            }
           }
         ]
       }
@@ -384,7 +959,7 @@
       "seq": 21,
       "kind": "event",
       "event": "combat_end",
-      "turn": 8,
+      "turn": 10,
       "phase": "combat",
       "data": {
         "combat": "c8",
@@ -395,7 +970,14 @@
             "healthBefore": 27,
             "healthAfter": 27,
             "damageTaken": 0,
-            "survivors": [ { "entity": "e19" }, { "entity": "e60" } ]
+            "survivors": [
+              {
+                "entity": "e19"
+              },
+              {
+                "entity": "e60"
+              }
+            ]
           },
           {
             "player": "p4",

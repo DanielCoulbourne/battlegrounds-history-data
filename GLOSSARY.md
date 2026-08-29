@@ -124,8 +124,11 @@ tier. It is all a player normally sees of the other seats.
 can be. You pay gold to raise it, and the price falls by 1 for every turn you do
 not.
 
-**Trinket.** A keepsake you pick up mid-game that changes your whole game. A
-lesser trinket is offered earlier and a greater one later.
+**Trinket.** A keepsake you pick up mid-game that changes your whole game. There
+are two slots, offered at two different points: a **lesser** trinket earlier and
+a **greater** trinket later. You hold at most one of each. The format records
+which is which in `trinketTier`, because they are separate slots rather than two
+grades of the same thing.
 
 **Triple.** Collect three copies of the same card and they merge into one golden
 copy, which is stronger. Making one also lets you Discover a card from a tier

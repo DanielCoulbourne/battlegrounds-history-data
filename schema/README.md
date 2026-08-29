@@ -1,34 +1,50 @@
 # Schema
 
-`bg-history-1.0.schema.json` is the normative artifact of this project. Where the
-prose in [SPECIFICATION.md](../SPECIFICATION.md) and this schema disagree about
-something the schema can express, the schema wins.
+The newest schema in this directory is the normative artifact of this project.
+Where the prose in [SPECIFICATION.md](../SPECIFICATION.md) and the schema
+disagree about something the schema can express, the schema wins.
 
-It is written for **JSON Schema draft 2020-12**. Any validator that supports that
-draft can use it.
+| File | Status |
+|---|---|
+| `bg-history-1.1.schema.json` | **Current.** Use this one. |
+| `bg-history-1.0.schema.json` | Frozen. Kept so files that pinned it keep validating. |
+
+Both are written for **JSON Schema draft 2020-12**. Any validator that supports
+that draft can use them.
 
 ## Identifier
 
 ```
-https://raw.githubusercontent.com/DanielCoulbourne/battlegrounds-history-data/main/schema/bg-history-1.0.schema.json
+https://raw.githubusercontent.com/DanielCoulbourne/battlegrounds-history-data/main/schema/bg-history-1.1.schema.json
 ```
 
-That URL is the schema's `$id` and resolves to the file. It tracks `main`, so it
-always serves the newest 1.x schema. Additions in a 1.x release are only ever
-additive, so a file that validated before still validates.
+That URL is the schema's `$id` and resolves to the file. It tracks `main`, so
+within a minor version it always serves the newest fixes.
 
 If you need a snapshot that can never move under you, pin a Git tag:
 
 ```
-https://raw.githubusercontent.com/DanielCoulbourne/battlegrounds-history-data/v1.0.0/schema/bg-history-1.0.schema.json
+https://raw.githubusercontent.com/DanielCoulbourne/battlegrounds-history-data/v1.1.0/schema/bg-history-1.1.schema.json
 ```
 
 ## Version numbering
 
-The schema file's name carries `MAJOR.MINOR` of the specification, matching the
-`version` field inside a document. Version 2 of the specification will ship as
-`bg-history-2.0.schema.json` alongside this one, not in place of it, so old files
-stay validatable forever.
+Each released schema keeps its own file and stays here forever. A minor release
+adds a file; it does not edit the one before it. So `bg-history-1.0.schema.json`
+is exactly what was published as 1.0, and always will be.
+
+That costs a little duplication and buys something worth more: a file written
+against an older schema can still be validated against the schema it was written
+against, years later, without anyone having to trust a changelog.
+
+**Additive really means additive.** The repository's own check proves it: every
+example is declared `version: "1.1"` and validates against **both** schemas. If a
+1.1 addition ever broke a 1.0 file, that check would fail.
+
+```bash
+node ../tools/validate.mjs ../examples/*.json
+node ../tools/validate.mjs --schema bg-history-1.0.schema.json ../examples/*.json
+```
 
 ## What the schema does and does not check
 
@@ -58,5 +74,11 @@ node ../tools/validate.mjs ../examples/full-game.json
 Or with any other draft 2020-12 validator, for example `check-jsonschema`:
 
 ```bash
-check-jsonschema --schemafile bg-history-1.0.schema.json ../examples/full-game.json
+check-jsonschema --schemafile bg-history-1.1.schema.json ../examples/full-game.json
 ```
+
+## How 1.1 was built
+
+`tools/make-1.1.mjs` derives the 1.1 schema from the frozen 1.0 file by applying
+named patches. It is kept in the repository so the difference between two minor
+versions is a short, readable script rather than a diff of two large JSON files.

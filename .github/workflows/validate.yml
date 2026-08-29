@@ -13,4 +13,7 @@ jobs:
         with:
           node-version: 20
       - run: npm install
-      - run: npm run validate
+      - name: Validate every example against the current schema
+        run: npm run validate
+      - name: Prove the 1.1 additions did not break 1.0
+        run: npm run validate:1.0

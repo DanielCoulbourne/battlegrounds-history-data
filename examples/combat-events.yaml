@@ -1,7 +1,7 @@
 # combat-events.yaml — the same data as combat-events.json, in YAML.
-# Both files validate against schema/bg-history-1.0.schema.json.
+# Both files validate against schema/bg-history-1.1.schema.json.
 format: battlegrounds-history
-version: '1.0'
+version: '1.1'
 cardIdScheme: hearthstone
 recording:
   id: example-combat-events
@@ -57,6 +57,10 @@ players:
     agent:
       name: ExampleBot
       version: 0.1.0
+    hero:
+      cardId: TB_BaconShop_HERO_27
+      name: Sindragosa
+      type: hero
 history:
   - seq: 1
     kind: event
@@ -118,6 +122,10 @@ history:
               golden: true
               minionTypes:
                 - murloc
+          hero:
+            cardId: TB_BaconShop_HERO_30
+            name: Nefarian
+            type: hero
         - player: p2
           tier: 3
           healthBefore: 22
@@ -149,6 +157,10 @@ history:
                   text: Venomous
                   keywords:
                     - venomous
+          hero:
+            cardId: TB_BaconShop_HERO_27
+            name: Sindragosa
+            type: hero
     note: p1 swings first because it brought more minions.
   - seq: 2
     kind: event

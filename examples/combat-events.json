@@ -1,6 +1,6 @@
 {
   "format": "battlegrounds-history",
-  "version": "1.0",
+  "version": "1.1",
   "cardIdScheme": "hearthstone",
   "recording": {
     "id": "example-combat-events",
@@ -27,16 +27,32 @@
     "mode": "solo",
     "patch": "34.2.0",
     "seatCount": 8,
-    "minionTypes": ["beast", "elemental", "mech", "murloc", "quilboar"],
-    "rng": { "seed": "4c1f9a2b", "engine": "example-simulator/xoshiro256" }
+    "minionTypes": [
+      "beast",
+      "elemental",
+      "mech",
+      "murloc",
+      "quilboar"
+    ],
+    "rng": {
+      "seed": "4c1f9a2b",
+      "engine": "example-simulator/xoshiro256"
+    }
   },
   "players": [
     {
       "id": "p1",
       "seat": 0,
       "kind": "bot",
-      "agent": { "name": "ExampleBot", "version": "0.1.0" },
-      "hero": { "cardId": "TB_BaconShop_HERO_30", "name": "Nefarian", "type": "hero" },
+      "agent": {
+        "name": "ExampleBot",
+        "version": "0.1.0"
+      },
+      "hero": {
+        "cardId": "TB_BaconShop_HERO_30",
+        "name": "Nefarian",
+        "type": "hero"
+      },
       "heroPower": {
         "cardId": "TB_BaconShop_HP_043",
         "name": "Nefarious Fire",
@@ -44,7 +60,20 @@
         "text": "Start of Combat: deal 1 damage to all enemy minions."
       }
     },
-    { "id": "p2", "seat": 3, "kind": "bot", "agent": { "name": "ExampleBot", "version": "0.1.0" } }
+    {
+      "id": "p2",
+      "seat": 3,
+      "kind": "bot",
+      "agent": {
+        "name": "ExampleBot",
+        "version": "0.1.0"
+      },
+      "hero": {
+        "cardId": "TB_BaconShop_HERO_27",
+        "name": "Sindragosa",
+        "type": "hero"
+      }
+    }
   ],
   "history": [
     {
@@ -61,23 +90,79 @@
             "player": "p1",
             "tier": 3,
             "healthBefore": 27,
-            "heroPower": { "cardId": "TB_BaconShop_HP_043", "name": "Nefarious Fire", "type": "heroPower" },
+            "heroPower": {
+              "cardId": "TB_BaconShop_HP_043",
+              "name": "Nefarious Fire",
+              "type": "heroPower"
+            },
             "board": [
               {
-                "entity": "a1", "cardId": "BG31_803", "name": "Buzzing Vermin", "type": "minion",
-                "attack": 4, "health": 4, "tier": 1, "minionTypes": ["beast"], "keywords": ["taunt", "reborn"],
-                "enchantments": [ { "name": "Dark Gift", "text": "Reborn", "keywords": ["reborn"] } ]
+                "entity": "a1",
+                "cardId": "BG31_803",
+                "name": "Buzzing Vermin",
+                "type": "minion",
+                "attack": 4,
+                "health": 4,
+                "tier": 1,
+                "minionTypes": [
+                  "beast"
+                ],
+                "keywords": [
+                  "taunt",
+                  "reborn"
+                ],
+                "enchantments": [
+                  {
+                    "name": "Dark Gift",
+                    "text": "Reborn",
+                    "keywords": [
+                      "reborn"
+                    ]
+                  }
+                ]
               },
               {
-                "entity": "a2", "cardId": "BG26_152", "name": "Utility Drone", "type": "minion",
-                "attack": 6, "health": 9, "tier": 3, "minionTypes": ["mech"], "keywords": ["taunt", "divineShield"],
-                "attached": [ { "entity": "a2p", "cardId": "BG_BOT_911", "name": "Annoy-o-Module" } ]
+                "entity": "a2",
+                "cardId": "BG26_152",
+                "name": "Utility Drone",
+                "type": "minion",
+                "attack": 6,
+                "health": 9,
+                "tier": 3,
+                "minionTypes": [
+                  "mech"
+                ],
+                "keywords": [
+                  "taunt",
+                  "divineShield"
+                ],
+                "attached": [
+                  {
+                    "entity": "a2p",
+                    "cardId": "BG_BOT_911",
+                    "name": "Annoy-o-Module"
+                  }
+                ]
               },
               {
-                "entity": "a3", "cardId": "BG32_330", "name": "Flighty Scout", "type": "minion",
-                "attack": 6, "health": 6, "tier": 1, "golden": true, "minionTypes": ["murloc"]
+                "entity": "a3",
+                "cardId": "BG32_330",
+                "name": "Flighty Scout",
+                "type": "minion",
+                "attack": 6,
+                "health": 6,
+                "tier": 1,
+                "golden": true,
+                "minionTypes": [
+                  "murloc"
+                ]
               }
-            ]
+            ],
+            "hero": {
+              "cardId": "TB_BaconShop_HERO_30",
+              "name": "Nefarian",
+              "type": "hero"
+            }
           },
           {
             "player": "p2",
@@ -85,15 +170,50 @@
             "healthBefore": 22,
             "board": [
               {
-                "entity": "b1", "cardId": "BG33_886", "name": "Tusked Camper", "type": "minion",
-                "attack": 5, "health": 6, "tier": 1, "minionTypes": ["quilboar"], "keywords": ["taunt"]
+                "entity": "b1",
+                "cardId": "BG33_886",
+                "name": "Tusked Camper",
+                "type": "minion",
+                "attack": 5,
+                "health": 6,
+                "tier": 1,
+                "minionTypes": [
+                  "quilboar"
+                ],
+                "keywords": [
+                  "taunt"
+                ]
               },
               {
-                "entity": "b2", "cardId": "BG31_803", "name": "Buzzing Vermin", "type": "minion",
-                "attack": 3, "health": 3, "tier": 1, "minionTypes": ["beast"], "keywords": ["venomous"],
-                "enchantments": [ { "name": "Dark Gift", "text": "Venomous", "keywords": ["venomous"] } ]
+                "entity": "b2",
+                "cardId": "BG31_803",
+                "name": "Buzzing Vermin",
+                "type": "minion",
+                "attack": 3,
+                "health": 3,
+                "tier": 1,
+                "minionTypes": [
+                  "beast"
+                ],
+                "keywords": [
+                  "venomous"
+                ],
+                "enchantments": [
+                  {
+                    "name": "Dark Gift",
+                    "text": "Venomous",
+                    "keywords": [
+                      "venomous"
+                    ]
+                  }
+                ]
               }
-            ]
+            ],
+            "hero": {
+              "cardId": "TB_BaconShop_HERO_27",
+              "name": "Sindragosa",
+              "type": "hero"
+            }
           }
         ]
       },
@@ -108,7 +228,11 @@
       "actor": "p1",
       "data": {
         "combat": "c8",
-        "source": { "player": "p1", "zone": "heroPower", "cardId": "TB_BaconShop_HP_043" },
+        "source": {
+          "player": "p1",
+          "zone": "heroPower",
+          "cardId": "TB_BaconShop_HP_043"
+        },
         "reason": "heroPower",
         "times": 1
       },
@@ -122,8 +246,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "source": { "player": "p1", "zone": "heroPower", "cardId": "TB_BaconShop_HP_043" },
-        "target": { "player": "p2", "zone": "board", "entity": "b1" },
+        "source": {
+          "player": "p1",
+          "zone": "heroPower",
+          "cardId": "TB_BaconShop_HP_043"
+        },
+        "target": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b1"
+        },
         "amount": 1
       }
     },
@@ -135,8 +267,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "source": { "player": "p1", "zone": "heroPower", "cardId": "TB_BaconShop_HP_043" },
-        "target": { "player": "p2", "zone": "board", "entity": "b2" },
+        "source": {
+          "player": "p1",
+          "zone": "heroPower",
+          "cardId": "TB_BaconShop_HP_043"
+        },
+        "target": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b2"
+        },
         "amount": 1
       }
     },
@@ -148,8 +288,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "attacker": { "player": "p1", "zone": "board", "entity": "a1" },
-        "defender": { "player": "p2", "zone": "board", "entity": "b1" },
+        "attacker": {
+          "player": "p1",
+          "zone": "board",
+          "entity": "a1"
+        },
+        "defender": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b1"
+        },
         "swing": 1
       },
       "note": "Tusked Camper has Taunt, so it must be attacked before anything else on that board."
@@ -162,8 +310,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "source": { "player": "p1", "zone": "board", "entity": "a1" },
-        "target": { "player": "p2", "zone": "board", "entity": "b1" },
+        "source": {
+          "player": "p1",
+          "zone": "board",
+          "entity": "a1"
+        },
+        "target": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b1"
+        },
         "amount": 4
       }
     },
@@ -175,8 +331,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "source": { "player": "p2", "zone": "board", "entity": "b1" },
-        "target": { "player": "p1", "zone": "board", "entity": "a1" },
+        "source": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b1"
+        },
+        "target": {
+          "player": "p1",
+          "zone": "board",
+          "entity": "a1"
+        },
         "amount": 5,
         "lethal": true
       },
@@ -190,8 +354,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "target": { "player": "p1", "zone": "board", "entity": "a1" },
-        "killer": { "player": "p2", "zone": "board", "entity": "b1" }
+        "target": {
+          "player": "p1",
+          "zone": "board",
+          "entity": "a1"
+        },
+        "killer": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b1"
+        }
       }
     },
     {
@@ -203,10 +375,24 @@
       "actor": "p1",
       "data": {
         "combat": "c8",
-        "source": { "player": "p1", "entity": "a1" },
+        "source": {
+          "player": "p1",
+          "entity": "a1"
+        },
         "card": {
-          "entity": "a1r", "cardId": "BG31_803", "name": "Buzzing Vermin", "type": "minion",
-          "attack": 1, "health": 1, "tier": 1, "minionTypes": ["beast"], "keywords": ["taunt"]
+          "entity": "a1r",
+          "cardId": "BG31_803",
+          "name": "Buzzing Vermin",
+          "type": "minion",
+          "attack": 1,
+          "health": 1,
+          "tier": 1,
+          "minionTypes": [
+            "beast"
+          ],
+          "keywords": [
+            "taunt"
+          ]
         },
         "position": 0
       },
@@ -220,8 +406,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "attacker": { "player": "p2", "zone": "board", "entity": "b1" },
-        "defender": { "player": "p1", "zone": "board", "entity": "a1r" },
+        "attacker": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b1"
+        },
+        "defender": {
+          "player": "p1",
+          "zone": "board",
+          "entity": "a1r"
+        },
         "swing": 1
       }
     },
@@ -233,8 +427,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "source": { "player": "p2", "zone": "board", "entity": "b1" },
-        "target": { "player": "p1", "zone": "board", "entity": "a1r" },
+        "source": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b1"
+        },
+        "target": {
+          "player": "p1",
+          "zone": "board",
+          "entity": "a1r"
+        },
         "amount": 5,
         "lethal": true
       }
@@ -247,8 +449,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "source": { "player": "p1", "zone": "board", "entity": "a1r" },
-        "target": { "player": "p2", "zone": "board", "entity": "b1" },
+        "source": {
+          "player": "p1",
+          "zone": "board",
+          "entity": "a1r"
+        },
+        "target": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b1"
+        },
         "amount": 1,
         "lethal": true
       }
@@ -261,8 +471,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "target": { "player": "p1", "zone": "board", "entity": "a1r" },
-        "killer": { "player": "p2", "zone": "board", "entity": "b1" }
+        "target": {
+          "player": "p1",
+          "zone": "board",
+          "entity": "a1r"
+        },
+        "killer": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b1"
+        }
       }
     },
     {
@@ -273,8 +491,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "target": { "player": "p2", "zone": "board", "entity": "b1" },
-        "killer": { "player": "p1", "zone": "board", "entity": "a1r" }
+        "target": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b1"
+        },
+        "killer": {
+          "player": "p1",
+          "zone": "board",
+          "entity": "a1r"
+        }
       },
       "note": "Two minions died at the same instant. The order of these entries is the order the engine settled them, which is a fact about the engine and is recorded rather than inferred."
     },
@@ -286,8 +512,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "attacker": { "player": "p1", "zone": "board", "entity": "a2" },
-        "defender": { "player": "p2", "zone": "board", "entity": "b2" },
+        "attacker": {
+          "player": "p1",
+          "zone": "board",
+          "entity": "a2"
+        },
+        "defender": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b2"
+        },
         "swing": 1
       }
     },
@@ -299,8 +533,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "source": { "player": "p1", "zone": "board", "entity": "a2" },
-        "target": { "player": "p2", "zone": "board", "entity": "b2" },
+        "source": {
+          "player": "p1",
+          "zone": "board",
+          "entity": "a2"
+        },
+        "target": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b2"
+        },
         "amount": 6,
         "lethal": true
       }
@@ -313,8 +555,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "source": { "player": "p2", "zone": "board", "entity": "b2" },
-        "target": { "player": "p1", "zone": "board", "entity": "a2" },
+        "source": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b2"
+        },
+        "target": {
+          "player": "p1",
+          "zone": "board",
+          "entity": "a2"
+        },
         "amount": 3,
         "poisonous": true,
         "absorbed": true,
@@ -330,8 +580,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "target": { "player": "p1", "zone": "board", "entity": "a2" },
-        "source": { "player": "p2", "zone": "board", "entity": "b2" }
+        "target": {
+          "player": "p1",
+          "zone": "board",
+          "entity": "a2"
+        },
+        "source": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b2"
+        }
       }
     },
     {
@@ -342,8 +600,16 @@
       "phase": "combat",
       "data": {
         "combat": "c8",
-        "target": { "player": "p2", "zone": "board", "entity": "b2" },
-        "killer": { "player": "p1", "zone": "board", "entity": "a2" }
+        "target": {
+          "player": "p2",
+          "zone": "board",
+          "entity": "b2"
+        },
+        "killer": {
+          "player": "p1",
+          "zone": "board",
+          "entity": "a2"
+        }
       }
     },
     {
@@ -374,7 +640,14 @@
             "healthBefore": 27,
             "healthAfter": 27,
             "damageTaken": 0,
-            "survivors": [ { "entity": "a2" }, { "entity": "a3" } ]
+            "survivors": [
+              {
+                "entity": "a2"
+              },
+              {
+                "entity": "a3"
+              }
+            ]
           },
           {
             "player": "p2",

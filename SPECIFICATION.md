@@ -1,11 +1,11 @@
-# Battlegrounds History Data, version 1.0
+# Battlegrounds History Data, version 1.1
 
 This document defines a file format for recording a game of Hearthstone
 Battlegrounds: the states the game passed through, and the actions that moved
 between them.
 
 The normative artifact is the JSON Schema in
-[`schema/bg-history-1.0.schema.json`](schema/bg-history-1.0.schema.json). Where
+[`schema/bg-history-1.1.schema.json`](schema/bg-history-1.1.schema.json). Where
 this prose and the schema disagree, the schema wins for anything the schema can
 express, and this prose wins for everything else. The section
 [Rules a schema cannot check](#14-rules-a-schema-cannot-check) lists the rules that
@@ -31,6 +31,7 @@ recommendation you may ignore with a reason. **May** is permission.
 - [10. Recording the recruit phase](#10-recording-the-recruit-phase)
 - [11. Recording combat](#11-recording-combat)
 - [12. Partial observation](#12-partial-observation)
+- [12A. Recording from a game client](#12a-recording-from-a-game-client)
 - [13. Versioning and unknown fields](#13-versioning-and-unknown-fields)
 - [14. Rules a schema cannot check](#14-rules-a-schema-cannot-check)
 - [15. Converting from other formats](#15-converting-from-other-formats)
@@ -218,6 +219,12 @@ different cards have shared a name before. **Never match on `name`.**
 Heroes, hero powers, trinkets, spells and tokens are all cards, and all carry a
 `cardId`. The `type` field says which sort of card it is.
 
+A trinket carries `trinketTier`, which is `lesser` or `greater`. These are not
+rarities: they are two separate slots, offered at two different points in the
+game, and a player holds at most one of each. A recording that loses the
+distinction cannot say which of a seat's two trinkets was picked when, so the
+field is part of the format rather than something to bury in `ext`.
+
 A golden copy is the same card with `golden: true`, not a different `cardId`.
 Some data sources give golden cards their own id; if yours does, record the base
 id and set `golden`.
@@ -334,6 +341,14 @@ only), `hero`, `heroPower`, `startingHealth`, `startingArmor`, and `result`.
 
 `name` is optional so you can publish a recording without publishing who played
 it.
+
+**Record `hero` for every seat you can.** Heroes decide how a game is played, so
+a recording that names only the recorded seat's hero is much less useful than one
+that names all eight. A one-seat recording can fill in every seat's hero from the
+leaderboard, even though it learns almost nothing else about the other seven. If
+you know the hero's name but not its card id, write
+`{"name": "Illidan Stormrage", "type": "hero", "unknown": true}` rather than
+inventing an id.
 
 Armor is starting health that most effects treat as health. This format keeps it
 separate wherever the game does, and lets you fold it into `health` if your
@@ -463,7 +478,9 @@ entries.
 - `zones` is keyed by zone name. A zone you leave out was not written down; a
   zone with an empty `cards` array was written down and was empty.
 - `standings` is the leaderboard: one row per seat, which is all a player
-  normally sees of the others.
+  normally sees of the others. Each row may carry `hero`, because the
+  leaderboard shows every seat's hero portrait. That is the one fact about an
+  opponent a one-seat recording reliably learns, so record it.
 - `nextOpponent` is the seat this player will fight next, which the game
   announces before the recruit phase ends.
 
@@ -602,8 +619,11 @@ An event verb this specification does not list **must** start with `x-`.
 
 - `id` is what a later `choose` action points back at. It **must** be unique in
   the file.
-- `offerType` is `hero`, `discover`, `tripleReward`, `trinket`, `darkGift`,
-  `quest`, `reward`, `buddy` or `other`.
+- `offerType` is `hero`, `discover`, `tripleReward`, `trinket`,
+  `lesserTrinket`, `greaterTrinket`, `darkGift`, `quest`, `reward`, `buddy` or
+  `other`. Prefer `lesserTrinket` or `greaterTrinket` over the plain `trinket`
+  when you know which slot the offer was for; `trinket` stays for a recorder
+  that cannot tell.
 - `options` are counted from 0. An option holds one or more cards, because some
   choices offer a bundle.
 - `hidden: true` means the player had to commit before seeing the options. List
@@ -801,6 +821,57 @@ says the zone was empty. Omitting the zone says nothing at all.
 
 ---
 
+## 12A. Recording from a game client
+
+A program watching a live client is the hardest case this format has to serve,
+and the one it was shaped around. This section says what such a recording looks
+like, because getting it wrong is easy and the mistakes are quiet.
+
+A client's log tells you what **your** player did and what the game **showed
+you**. It does not tell you what anybody else decided. That asymmetry is the
+whole design problem, and the format answers it in one sentence:
+
+> **A seat recording carries `action` entries for one player, and carries other
+> players only through `event` and `state` entries.**
+
+You never write an `action` for a seat you were not sitting in. You did not see
+the decision; you saw at most its result, and a result is an event.
+
+### What such a file contains
+
+| About your seat | About the other seven |
+|---|---|
+| Every action: buys, sells, plays, moves, rolls, freezes, upgrades, hero power, choices. | No actions at all. |
+| Full `state` entries: board, hand, shop, gold, tier, health. | `standings` rows: hero, health, tavern tier, alive. |
+| Every offer you were shown, and which option you took. | The board they fielded, and only in a fight you took part in. |
+| Your hero and hero power. | Their hero, from the leaderboard. Usually not their hero power. |
+
+### Rules for this case
+
+1. **Set `observer.scope` to `seat`** and name the seat. Never claim `lobby`.
+2. **Write no action you did not watch a player take.** If the opponent's board
+   changed between two fights, that is a `state` observation, not a sequence of
+   inferred purchases.
+3. **Record every seat's hero.** The leaderboard gives you all eight, and it is
+   the one durable fact you get about an opponent.
+4. **Record an opponent's board only for fights you were in**, and put it in the
+   `combat_start` entry for that fight, where it is timestamped by the fight
+   rather than floating free.
+5. **Do not fill gaps by simulating.** If you did not see an opponent's health
+   change, write `null`. A guess that looks like an observation is worse than a
+   hole.
+6. **Expect to be missing the start.** A client log often begins mid-game, after
+   a restart or a rotation. Set `recording.truncated` and say so.
+
+### Two seat recordings of one lobby
+
+Two players in the same lobby produce two files. They merge: give both the same
+`game.id`, keep the player ids consistent, concatenate the histories and sort on
+a shared clock. The result is a wider recording, and it is still not a `lobby`
+recording — the union of two points of view is two points of view. Keep the scope
+at `seat` and name whichever seat the merged file is centred on, or split the
+difference by publishing both files.
+
 ## 13. Versioning and unknown fields
 
 ### 13.1 The version field
@@ -871,9 +942,11 @@ document, and a producer **must** satisfy them. The validator in
 7. An `entity` name refers to one physical copy for its whole life. Reusing an
    entity name for a different copy is an error.
 8. `data.id` on an `offer` event is unique in the file.
-9. A file with `observer.scope` of `seat` contains no fact that seat could not
-   have observed. No program can check this one; it is on the producer's honour,
-   and it is the reason the field exists.
+9. A file with `observer.scope` of `seat` carries `action` entries for that seat
+   and for no other. You cannot have watched another player decide.
+10. A file with `observer.scope` of `seat` contains no fact that seat could not
+    have observed. No program can check this last one; it is on the producer's
+    honour, and it is the reason the field exists.
 
 ---
 
