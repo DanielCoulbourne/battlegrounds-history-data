@@ -132,6 +132,10 @@
           "description": "A name for this one physical copy, stable for as long as the copy exists. Two copies of the same card carry different entity names."
         },
         "cardId": { "$ref": "#/$defs/cardId" },
+        "dbfId": {
+          "type": "integer",
+          "description": "Blizzard's numeric id for the same card. It is the other stable identifier, and some parts of the game report it instead of the text id. Record it when you have it. A card with a dbfId and no cardId is identified, so it does not need 'unknown'."
+        },
         "name": { "type": "string", "description": "For display. Never match on it." },
         "type": { "$ref": "#/$defs/cardType" },
         "attack": { "type": "integer", "description": "Current attack, with every buff already added in." },
@@ -166,6 +170,7 @@
       },
       "anyOf": [
         { "required": ["cardId"] },
+        { "required": ["dbfId"] },
         { "properties": { "unknown": { "const": true } }, "required": ["unknown"] }
       ]
     },
@@ -178,7 +183,8 @@
         "zone": { "$ref": "#/$defs/zoneName" },
         "index": { "type": "integer", "minimum": 0 },
         "entity": { "$ref": "#/$defs/identifier" },
-        "cardId": { "$ref": "#/$defs/cardId", "description": "Repeats what the entity already says, but helps a file that carries no entity names." }
+        "cardId": { "$ref": "#/$defs/cardId", "description": "Repeats what the entity already says, but helps a file that carries no entity names." },
+        "dbfId": { "type": "integer" }
       },
       "anyOf": [
         { "required": ["entity"] },

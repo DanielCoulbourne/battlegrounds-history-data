@@ -1,3 +1,6 @@
 node_modules/
 package-lock.json
+out/
 *.log
+# The converter's fixture is a log by nature and belongs in the repository.
+!converter/testdata/*.log

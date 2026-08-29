@@ -219,6 +219,13 @@ different cards have shared a name before. **Never match on `name`.**
 Heroes, hero powers, trinkets, spells and tokens are all cards, and all carry a
 `cardId`. The `type` field says which sort of card it is.
 
+`dbfId` is Blizzard's numeric id for the same card, and it is a second stable
+identifier rather than a competitor to the first. Some parts of the game report
+only the number — a client log names another player's trinkets that way — so a
+recorder that has the number and not the text id writes `dbfId` alone. A card
+with either one is identified. Write both when you have both, and match on
+whichever you have.
+
 A trinket carries `trinketTier`, which is `lesser` or `greater`. These are not
 rarities: they are two separate slots, offered at two different points in the
 game, and a player holds at most one of each. A recording that loses the
@@ -897,6 +904,17 @@ this format closes itself to extra members.
 **Readers must ignore vocabulary words they do not recognise**, rather than
 failing. An unknown action verb is an action you cannot interpret; skip it, and
 say so if your output has somewhere to say it. Do not abort.
+
+**A validator is not a reader, and the difference matters.** A minor version may
+add a vocabulary word, and the schema lists the words it knows. So a file that
+uses a word added in 1.1 passes a 1.1 validator and **fails a 1.0 validator**,
+even though a 1.0 reader must read that file happily by ignoring the word. Both
+behaviours are correct and they are not in conflict: a validator's job is to say
+which version a file conforms to, and a reader's job is to get on with it.
+
+The practical rule: **validate against the version the file declares.** Read
+`version` first, and reach for the matching schema. Validating a file against
+an older schema than it declares tells you only that it uses something newer.
 
 ### 13.3 Your own data: `ext`
 

@@ -37,14 +37,23 @@ That costs a little duplication and buys something worth more: a file written
 against an older schema can still be validated against the schema it was written
 against, years later, without anyone having to trust a changelog.
 
-**Additive really means additive.** The repository's own check proves it: every
-example is declared `version: "1.1"` and validates against **both** schemas. If a
-1.1 addition ever broke a 1.0 file, that check would fail.
+**Additive really means additive — for readers.** Three of the four examples are
+declared `version: "1.1"` and validate against **both** schemas, and the
+repository checks that on every push. If a 1.1 addition ever broke an existing
+1.0 file, that check would fail.
 
 ```bash
 node ../tools/validate.mjs ../examples/*.json
-node ../tools/validate.mjs --schema bg-history-1.0.schema.json ../examples/*.json
+npm run validate:1.0            # the same files against the 1.0 schema
 ```
+
+The fourth example, `from-client-log.json`, uses `offerType: "lesserTrinket"`,
+a word 1.1 added. It **fails** the 1.0 schema, and that is correct rather than a
+bug. A validator's job is to say which version a file conforms to; a reader's
+job is to ignore what it does not recognise and get on with it. So a 1.0 reader
+reads that file fine, and a 1.0 validator rightly says it is not a 1.0 file.
+
+**Validate against the version the file declares.** Read `version` first.
 
 ## What the schema does and does not check
 

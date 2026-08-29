@@ -12,6 +12,8 @@ fight.
 - **[MIGRATION.md](MIGRATION.md)** — converting a nested turn-and-action
   recording, field by field.
 - **[schema/](schema/)** — the JSON Schema. It is the normative artifact.
+- **[converter/](converter/)** — `bgh-convert`, which turns a Hearthstone
+  client log into these files, and a Go library for writing them.
 - **[examples/](examples/)** — complete files, in JSON and YAML.
 
 This project is not affiliated with Blizzard Entertainment.
@@ -166,8 +168,25 @@ history:
 | [`examples/full-game.json`](examples/full-game.json) | A whole game, start to finish. Four seats, low starting health, so it fits on one page. Combat recorded at the `outcome` level. |
 | [`examples/single-turn.json`](examples/single-turn.json) | One recruit phase from one player's point of view: a purchase, a fusion, a triple and the card it discovers, a roll, a freeze. Combat recorded at the `boards` level. |
 | [`examples/combat-events.json`](examples/combat-events.json) | One fight, blow by blow: a start-of-combat hero power, a trade, Reborn, a Divine Shield swallowing a poisoned hit. Combat recorded at the `events` level. |
+| [`examples/from-client-log.json`](examples/from-client-log.json) | Real output of `bgh-convert`, from a synthetic client log. What a recording made from one player's game client actually looks like. |
 
 Each has a `.yaml` twin holding the same data.
+
+## Recording from a real game
+
+[`converter/`](converter/) holds `bgh-convert`: point it at a Hearthstone
+`Power.log` and it writes one file per game.
+
+```bash
+cd converter && go build ./cmd/bgh-convert
+./bgh-convert Power.log
+```
+
+Everything it writes is a one-seat recording, because that is what a client log
+knows: what your player did, and what the game showed you. It records nothing
+about what the other seven players decided, and the file says so rather than
+leaving you to infer it. The converter's README covers what the log does and
+does not carry, and how to switch the client's logging on in the first place.
 
 ## How to validate a file
 

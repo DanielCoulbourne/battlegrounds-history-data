@@ -1,0 +1,829 @@
+{
+  "format": "battlegrounds-history",
+  "version": "1.1",
+  "cardIdScheme": "hearthstone",
+  "recording": {
+    "id": "hs-987654321-p3",
+    "recordedAt": "2026-01-01T00:00:00Z",
+    "recorder": {
+      "name": "bgh-convert",
+      "kind": "tracker",
+      "url": "https://github.com/DanielCoulbourne/battlegrounds-history-data"
+    },
+    "observer": {
+      "scope": "seat",
+      "seat": "p3"
+    },
+    "detail": {
+      "combat": "events",
+      "states": "turnStart",
+      "entities": true
+    },
+    "note": "Converted from a Hearthstone client log. A client log records what this player did and what the game showed them, and nothing about what the other seats decided."
+  },
+  "game": {
+    "id": "hs-987654321",
+    "mode": "solo",
+    "patch": "999999",
+    "seatCount": 8
+  },
+  "players": [
+    {
+      "id": "p3",
+      "seat": 2,
+      "kind": "human",
+      "hero": {
+        "entity": "e93",
+        "cardId": "TB_BaconShop_HERO_30",
+        "type": "hero"
+      },
+      "startingHealth": 30,
+      "startingArmor": 10,
+      "result": {
+        "placement": 4,
+        "health": 0,
+        "tier": 2,
+        "eliminatedOnTurn": 2
+      }
+    },
+    {
+      "id": "p4",
+      "seat": 3,
+      "kind": "unknown",
+      "hero": {
+        "entity": "e202",
+        "cardId": "BG22_HERO_002",
+        "type": "hero"
+      },
+      "startingHealth": 30,
+      "startingArmor": 5,
+      "result": {
+        "placement": 1,
+        "health": 35
+      }
+    },
+    {
+      "id": "p5",
+      "seat": 4,
+      "kind": "unknown",
+      "hero": {
+        "entity": "e203",
+        "cardId": "BG22_HERO_003",
+        "type": "hero"
+      },
+      "startingHealth": 30,
+      "result": {
+        "placement": 2,
+        "health": 30
+      }
+    },
+    {
+      "id": "p6",
+      "seat": 5,
+      "kind": "unknown",
+      "hero": {
+        "entity": "e204",
+        "cardId": "TB_BaconShop_HERO_08",
+        "type": "hero"
+      },
+      "startingHealth": 30,
+      "result": {
+        "placement": 3,
+        "health": 30
+      }
+    }
+  ],
+  "history": [
+    {
+      "seq": 1,
+      "kind": "event",
+      "phase": "setup",
+      "event": "game_start"
+    },
+    {
+      "seq": 2,
+      "kind": "event",
+      "turn": 0,
+      "phase": "setup",
+      "actor": "p3",
+      "event": "offer",
+      "data": {
+        "id": "offer-1",
+        "offerType": "hero",
+        "options": [
+          {
+            "cards": [
+              {
+                "entity": "e93",
+                "cardId": "TB_BaconShop_HERO_30",
+                "type": "hero",
+                "health": 30
+              }
+            ]
+          },
+          {
+            "cards": [
+              {
+                "entity": "e94",
+                "cardId": "TB_BaconShop_HERO_27"
+              }
+            ]
+          }
+        ],
+        "mandatory": true
+      }
+    },
+    {
+      "seq": 3,
+      "kind": "action",
+      "turn": 0,
+      "phase": "setup",
+      "actor": "p3",
+      "action": "choose_hero",
+      "data": {
+        "offer": "offer-1",
+        "option": 0
+      }
+    },
+    {
+      "seq": 4,
+      "kind": "event",
+      "turn": 1,
+      "phase": "recruit",
+      "event": "turn_start",
+      "data": {
+        "gold": 3,
+        "turn": 1
+      }
+    },
+    {
+      "seq": 5,
+      "kind": "event",
+      "turn": 1,
+      "phase": "recruit",
+      "actor": "p3",
+      "event": "shop_dealt",
+      "data": {
+        "reason": "turnStart",
+        "cards": [
+          {
+            "entity": "e435",
+            "cardId": "BG31_803",
+            "type": "minion",
+            "attack": 1,
+            "health": 1,
+            "tier": 1,
+            "minionTypes": [
+              "beast"
+            ],
+            "keywords": [
+              "taunt"
+            ],
+            "cost": 3
+          },
+          {
+            "entity": "e437",
+            "cardId": "BG33_886",
+            "type": "minion",
+            "attack": 2,
+            "health": 3,
+            "tier": 1,
+            "minionTypes": [
+              "quilboar"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "seq": 6,
+      "kind": "state",
+      "turn": 1,
+      "phase": "recruit",
+      "actor": "p3",
+      "reason": "turnStart",
+      "player": {
+        "health": 40,
+        "tier": 1,
+        "gold": 3,
+        "alive": true
+      },
+      "zones": {
+        "board": {
+          "cards": [],
+          "capacity": 7
+        },
+        "hand": {
+          "cards": [],
+          "capacity": 10
+        },
+        "trinkets": {
+          "cards": []
+        }
+      },
+      "standings": [
+        {
+          "player": "p3",
+          "hero": {
+            "entity": "e93",
+            "cardId": "TB_BaconShop_HERO_30",
+            "type": "hero"
+          },
+          "health": 40,
+          "tier": 1,
+          "alive": true,
+          "placement": 4
+        },
+        {
+          "player": "p4",
+          "hero": {
+            "entity": "e202",
+            "cardId": "BG22_HERO_002",
+            "type": "hero"
+          },
+          "health": 35,
+          "tier": null,
+          "alive": true,
+          "placement": 1
+        },
+        {
+          "player": "p5",
+          "hero": {
+            "entity": "e203",
+            "cardId": "BG22_HERO_003",
+            "type": "hero"
+          },
+          "health": 30,
+          "tier": null,
+          "alive": true,
+          "placement": 2
+        },
+        {
+          "player": "p6",
+          "hero": {
+            "entity": "e204",
+            "cardId": "TB_BaconShop_HERO_08",
+            "type": "hero"
+          },
+          "health": 30,
+          "tier": null,
+          "alive": true,
+          "placement": 3
+        }
+      ]
+    },
+    {
+      "seq": 7,
+      "kind": "action",
+      "turn": 1,
+      "phase": "recruit",
+      "actor": "p3",
+      "action": "buy",
+      "data": {
+        "from": {
+          "zone": "shop",
+          "index": 0,
+          "entity": "e435",
+          "cardId": "BG31_803"
+        },
+        "to": {
+          "zone": "hand"
+        },
+        "cost": 3,
+        "gold": 3
+      }
+    },
+    {
+      "seq": 8,
+      "kind": "action",
+      "turn": 1,
+      "phase": "recruit",
+      "actor": "p3",
+      "action": "play",
+      "data": {
+        "from": {
+          "player": "p3",
+          "zone": "hand",
+          "entity": "e435",
+          "cardId": "BG31_803"
+        },
+        "to": {
+          "zone": "board"
+        }
+      }
+    },
+    {
+      "seq": 9,
+      "kind": "event",
+      "turn": 1,
+      "phase": "recruit",
+      "actor": "p3",
+      "event": "pairing_announced",
+      "data": {
+        "opponent": "p4"
+      }
+    },
+    {
+      "seq": 10,
+      "kind": "event",
+      "turn": 1,
+      "phase": "combat",
+      "event": "combat_start",
+      "data": {
+        "combat": "c1",
+        "sides": [
+          {
+            "player": "p3",
+            "tier": 1,
+            "healthBefore": 40,
+            "board": [
+              {
+                "entity": "e435",
+                "cardId": "BG31_803",
+                "type": "minion",
+                "attack": 1,
+                "health": 1,
+                "tier": 1,
+                "minionTypes": [
+                  "beast"
+                ],
+                "keywords": [
+                  "taunt"
+                ]
+              }
+            ]
+          },
+          {
+            "player": "p4",
+            "hero": {
+              "entity": "e583",
+              "cardId": "BG22_HERO_002",
+              "type": "hero"
+            },
+            "tier": 1,
+            "healthBefore": 35,
+            "board": [
+              {
+                "entity": "e600",
+                "cardId": "BG33_886",
+                "type": "minion",
+                "attack": 2,
+                "health": 3,
+                "tier": 1,
+                "minionTypes": [
+                  "quilboar"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "seq": 11,
+      "kind": "event",
+      "turn": 1,
+      "phase": "combat",
+      "event": "attack",
+      "data": {
+        "attacker": {
+          "player": "p3",
+          "zone": "board",
+          "index": 0,
+          "entity": "e435",
+          "cardId": "BG31_803"
+        },
+        "defender": {
+          "zone": "board",
+          "index": 0,
+          "entity": "e600",
+          "cardId": "BG33_886"
+        },
+        "swing": 1,
+        "combat": "c1"
+      }
+    },
+    {
+      "seq": 12,
+      "kind": "event",
+      "turn": 1,
+      "phase": "combat",
+      "event": "damage",
+      "data": {
+        "target": {
+          "zone": "board",
+          "index": 0,
+          "entity": "e600",
+          "cardId": "BG33_886"
+        },
+        "source": {
+          "player": "p3",
+          "zone": "board",
+          "index": 0,
+          "entity": "e435",
+          "cardId": "BG31_803"
+        },
+        "amount": 1,
+        "lethal": false,
+        "combat": "c1"
+      }
+    },
+    {
+      "seq": 13,
+      "kind": "event",
+      "turn": 1,
+      "phase": "combat",
+      "event": "damage",
+      "data": {
+        "target": {
+          "player": "p3",
+          "zone": "board",
+          "index": 0,
+          "entity": "e435",
+          "cardId": "BG31_803"
+        },
+        "source": {
+          "zone": "board",
+          "index": 0,
+          "entity": "e600",
+          "cardId": "BG33_886"
+        },
+        "amount": 2,
+        "lethal": true,
+        "combat": "c1"
+      }
+    },
+    {
+      "seq": 14,
+      "kind": "event",
+      "turn": 1,
+      "phase": "combat",
+      "event": "death",
+      "data": {
+        "target": {
+          "player": "p3",
+          "index": 0,
+          "entity": "e435",
+          "cardId": "BG31_803"
+        },
+        "killer": {
+          "zone": "board",
+          "index": 0,
+          "entity": "e600",
+          "cardId": "BG33_886"
+        },
+        "combat": "c1"
+      }
+    },
+    {
+      "seq": 15,
+      "kind": "event",
+      "turn": 1,
+      "phase": "combat",
+      "event": "hero_damage",
+      "data": {
+        "amount": 2,
+        "player": "p3",
+        "combat": "c1"
+      }
+    },
+    {
+      "seq": 16,
+      "kind": "event",
+      "turn": 1,
+      "phase": "combat",
+      "event": "combat_end",
+      "data": {
+        "combat": "c1",
+        "sides": [
+          {
+            "player": "p3",
+            "healthBefore": 40,
+            "healthAfter": 38,
+            "damageTaken": 2
+          },
+          {
+            "player": "p4",
+            "healthBefore": null,
+            "healthAfter": null,
+            "damageTaken": null
+          }
+        ],
+        "winner": "p4"
+      }
+    },
+    {
+      "seq": 17,
+      "kind": "event",
+      "turn": 2,
+      "phase": "recruit",
+      "event": "turn_start",
+      "data": {
+        "gold": 0,
+        "turn": 2
+      }
+    },
+    {
+      "seq": 18,
+      "kind": "event",
+      "turn": 2,
+      "phase": "recruit",
+      "actor": "p3",
+      "event": "shop_dealt",
+      "data": {
+        "reason": "turnStart",
+        "cards": [
+          {
+            "entity": "e600",
+            "cardId": "BG33_886",
+            "type": "minion",
+            "attack": 2,
+            "health": 2,
+            "maxHealth": 3,
+            "tier": 1,
+            "minionTypes": [
+              "quilboar"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "seq": 19,
+      "kind": "state",
+      "turn": 2,
+      "phase": "recruit",
+      "actor": "p3",
+      "reason": "turnStart",
+      "player": {
+        "health": 38,
+        "tier": 1,
+        "gold": 0,
+        "alive": true
+      },
+      "zones": {
+        "board": {
+          "cards": [],
+          "capacity": 7
+        },
+        "hand": {
+          "cards": [],
+          "capacity": 10
+        },
+        "trinkets": {
+          "cards": []
+        }
+      },
+      "standings": [
+        {
+          "player": "p3",
+          "hero": {
+            "entity": "e93",
+            "cardId": "TB_BaconShop_HERO_30",
+            "type": "hero"
+          },
+          "health": 38,
+          "tier": 1,
+          "alive": true,
+          "placement": 4
+        },
+        {
+          "player": "p4",
+          "hero": {
+            "entity": "e202",
+            "cardId": "BG22_HERO_002",
+            "type": "hero"
+          },
+          "health": 35,
+          "tier": null,
+          "alive": true,
+          "placement": 1
+        },
+        {
+          "player": "p5",
+          "hero": {
+            "entity": "e203",
+            "cardId": "BG22_HERO_003",
+            "type": "hero"
+          },
+          "health": 30,
+          "tier": null,
+          "alive": true,
+          "placement": 2
+        },
+        {
+          "player": "p6",
+          "hero": {
+            "entity": "e204",
+            "cardId": "TB_BaconShop_HERO_08",
+            "type": "hero"
+          },
+          "health": 30,
+          "tier": null,
+          "alive": true,
+          "placement": 3
+        }
+      ]
+    },
+    {
+      "seq": 20,
+      "kind": "action",
+      "turn": 2,
+      "phase": "recruit",
+      "actor": "p3",
+      "action": "roll",
+      "data": {
+        "gold": 4
+      }
+    },
+    {
+      "seq": 21,
+      "kind": "event",
+      "turn": 2,
+      "phase": "recruit",
+      "actor": "p3",
+      "event": "shop_dealt",
+      "data": {
+        "reason": "roll",
+        "cards": [
+          {
+            "entity": "e600",
+            "cardId": "BG33_886",
+            "type": "minion",
+            "attack": 2,
+            "health": 2,
+            "maxHealth": 3,
+            "tier": 1,
+            "minionTypes": [
+              "quilboar"
+            ]
+          },
+          {
+            "entity": "e700",
+            "cardId": "BG32_330",
+            "type": "minion",
+            "attack": 3,
+            "health": 3,
+            "tier": 1,
+            "minionTypes": [
+              "murloc"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "seq": 22,
+      "kind": "action",
+      "turn": 2,
+      "phase": "recruit",
+      "actor": "p3",
+      "action": "freeze",
+      "data": {}
+    },
+    {
+      "seq": 23,
+      "kind": "action",
+      "turn": 2,
+      "phase": "recruit",
+      "actor": "p3",
+      "action": "upgrade",
+      "data": {
+        "gold": 3,
+        "tier": 2
+      }
+    },
+    {
+      "seq": 24,
+      "kind": "event",
+      "turn": 2,
+      "phase": "recruit",
+      "actor": "p3",
+      "event": "offer",
+      "data": {
+        "id": "offer-2",
+        "offerType": "lesserTrinket",
+        "options": [
+          {
+            "cards": [
+              {
+                "entity": "e801",
+                "cardId": "BG30_MagicItem_709"
+              }
+            ]
+          },
+          {
+            "cards": [
+              {
+                "entity": "e802",
+                "cardId": "BG36_MagicItem_220"
+              }
+            ]
+          }
+        ],
+        "mandatory": true
+      }
+    },
+    {
+      "seq": 25,
+      "kind": "action",
+      "turn": 2,
+      "phase": "recruit",
+      "actor": "p3",
+      "action": "choose",
+      "data": {
+        "offer": "offer-2",
+        "option": 0
+      }
+    },
+    {
+      "seq": 26,
+      "kind": "event",
+      "turn": 2,
+      "phase": "combat",
+      "event": "player_eliminated",
+      "data": {
+        "turn": 2,
+        "player": "p3",
+        "placement": 4
+      }
+    },
+    {
+      "seq": 27,
+      "kind": "event",
+      "turn": 2,
+      "phase": "end",
+      "event": "game_end",
+      "data": {
+        "placements": [
+          {
+            "player": "p3",
+            "placement": 4
+          },
+          {
+            "player": "p4",
+            "placement": 1
+          },
+          {
+            "player": "p5",
+            "placement": 2
+          },
+          {
+            "player": "p6",
+            "placement": 3
+          }
+        ],
+        "standings": [
+          {
+            "player": "p3",
+            "hero": {
+              "entity": "e93",
+              "cardId": "TB_BaconShop_HERO_30",
+              "type": "hero"
+            },
+            "health": 0,
+            "tier": 2,
+            "alive": false,
+            "placement": 4
+          },
+          {
+            "player": "p4",
+            "hero": {
+              "entity": "e202",
+              "cardId": "BG22_HERO_002",
+              "type": "hero"
+            },
+            "health": 35,
+            "tier": null,
+            "alive": true,
+            "placement": 1
+          },
+          {
+            "player": "p5",
+            "hero": {
+              "entity": "e203",
+              "cardId": "BG22_HERO_003",
+              "type": "hero"
+            },
+            "health": 30,
+            "tier": null,
+            "alive": true,
+            "placement": 2
+          },
+          {
+            "player": "p6",
+            "hero": {
+              "entity": "e204",
+              "cardId": "TB_BaconShop_HERO_08",
+              "type": "hero"
+            },
+            "health": 30,
+            "tier": null,
+            "alive": true,
+            "placement": 3
+          }
+        ]
+      }
+    }
+  ]
+}

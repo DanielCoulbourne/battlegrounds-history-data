@@ -9,10 +9,19 @@ one keeps validating.
 
 ## 1.1
 
-Additive. Every 1.0 file is a valid 1.1 file, and every 1.1 file in `examples/`
-still validates against the frozen 1.0 schema — the repository checks both, which
-is what an additive release is supposed to mean.
+Additive. Every 1.0 file is a valid 1.1 file, and the repository checks that on
+every push by validating the existing examples against both schemas.
 
+One clarification this release forced into the open: adding a **vocabulary word**
+is additive for readers but not for validators. A file that uses
+`offerType: "lesserTrinket"` fails a 1.0 validator and is read perfectly well by
+a 1.0 reader, which must ignore words it does not know. Validate against the
+version a file declares. See specification section 13.2.
+
+- **`card.dbfId`** — Blizzard's numeric card id, a second stable identifier. A
+  client log reports another player's trinkets by number and never by name, so
+  without this the only home for their identity was `ext`, which is where
+  identity goes to be lost. A card is identified by either id.
 - **`card.trinketTier`** — `lesser` or `greater`. The game offers two trinket
   slots at two different points and a player holds at most one of each, so this
   is a property of the trinket, not a rarity. 1.0 had no home for it and pushed
@@ -25,6 +34,9 @@ is what an additive release is supposed to mean.
   entry.
 - **Guidance on `players[].hero`**: record it for every seat you can, not only
   the recorded one.
+- **A converter and a Go library**, in `converter/`. `bgh-convert` turns a
+  Hearthstone client log into these files; the `bgh` package writes the format
+  from any source. Building it is what turned up `dbfId` and `trinketTier`.
 - **New specification section 12A, "Recording from a game client"** — what a
   recording made from one player's client contains, and the rule that a seat
   recording carries actions for one player and reaches the others only through
